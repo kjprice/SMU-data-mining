@@ -10,5 +10,3 @@ Download [zipped file](https://www.kaggle.com/census/2013-american-community-sur
 
 - Python examples from Eric Larson: https://github.com/eclarson/DataMiningNotebooks
 - Information from Yuhang Wang: https://drive.google.com/drive/folders/0ByOvNZ5dj09yM0gzaTBVZHNIV28?usp=sharing  
-
-Test

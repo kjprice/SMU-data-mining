@@ -1,6 +1,6 @@
 # SMU-data-mining
 
-This is based on Kaggle's [2013 American Community Survey](https://www.kaggle.com/census/2013-american-community-survey) dataset.
+This is based on Kaggle's [2013 American Community Survey](https://www.kaggle.com/census/2013-american-community-survey) dataset with [data dictionary](https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMSDataDict13.txt).
 
 ## Setup
 

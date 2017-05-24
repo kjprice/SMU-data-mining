@@ -2,10 +2,6 @@ import pandas as pd
 import numpy as pd
 import matplotlib.pyplot as plt
 
-fig = plt.figure(figsize=(13,14))
-fig.savefig('fig1.png', dpi = 300)
-
-
 df.info()
 
 # Group by Telephone
@@ -26,8 +22,3 @@ df.NPF.hist()
 # Houselhold income
 df.HINCP.plot.box()
 df[df.HINCP < 200000].HINCP.plot.box()
-
-
-
-
-# try to get an accurate representation of poverty

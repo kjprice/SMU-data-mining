@@ -5,12 +5,19 @@ housing_raw_b = pd.read_csv('data/ss13husb.csv')
 
 housing_raw = pd.concat([housing_raw_a, housing_raw_b])
 
-#housing_full = housing_raw[housing_raw.columns[10:16]].copy(deep=True)
 housing_full = housing_raw.copy(deep=True)
+
+#only take numeric columns for analysis
+housing_full = housing_full.select_dtypes(include=[np.number])
+#optionally limit columnns
+#housing_full = housing_full[housing_full.columns[10:16]]
+
 
 def specialfeatures():
    data = {}
    for column in housing_full:
+      if column[0:4] == 'wgtp':
+         continue
       feature = housing_full[column]
       d = []
       i = []

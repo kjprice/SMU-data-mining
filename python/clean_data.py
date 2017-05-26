@@ -5,48 +5,48 @@ df = housing_raw.copy(deep=True)
 #### Group features together - sorted by max-value desc
 
 dollarFeatures = [
-   'ADJINC',
-   'ADJHSG',
-   'SMOCP',
-   'MHP',
-   'INSP',
-   'MRGP',
-   'FULP',
-   'GRNTP',
-   'WATP',
-   'RNTP',
+   'ADJINC', # Adjustment factor for income and earnings dollar amounts (6 implied decimal places)
+   'ADJHSG', # Adjustment factor for housing dollar amounts
+   'SMOCP', # Selected monthly owner costs
+   'MHP', # Mobile home costs (yearly amount)
+   'INSP', # Fire/hazard/flood insurance (yearly amount)
+   'MRGP', # First mortgage payment (monthly amount)
+   'FULP', # Fuel cost(yearly cost for fuels other than gas and electricity)
+   'GRNTP', # Gross rent (monthly amount)
+   'WATP', # Water (yearly cost)
+   'RNTP', # Monthly rent
    'SMP', # Total payment on all second and junior mortgages and home equity loans
-   'WGTP', 
+   'WGTP', # TODO: Remove
    'CONP', # Condo fee
-   'ELEP',
-   'GASP',
-   'GRPIP',
-   'OCPIP',
-   'TAXP'
+   'ELEP', # Electricity (monthly cost)
+   'GASP', # Gas (monthly cost)
+   'GRPIP', # Gross rent as a percentage of household income past 12 months
+   'OCPIP', # Selected monthly owner costs as a percentage of household
+   'TAXP' # Property taxes (yearly amount)
 ]
 
 incomeDollarFeatures = [
-   'ADJINC',
-   'ADJHSG',
+   'ADJINC', # Adjustment factor for income and earnings dollar amounts (6 implied decimal places)
+   'ADJHSG', # Adjustment factor for housing dollar amounts
 ]
 
 costDollarFeatures = [
-   'SMOCP',
-   'MHP',
-   'INSP',
-   'MRGP',
-   'FULP',
-   'GRNTP',
-   'WATP',
-   'RNTP',
+   'SMOCP', # Selected monthly owner costs
+   'MHP', # Mobile home costs (yearly amount)
+   'INSP', # Fire/hazard/flood insurance (yearly amount)
+   'MRGP', # First mortgage payment (monthly amount)
+   'FULP', # Fuel cost(yearly cost for fuels other than gas and electricity)
+   'GRNTP', # Gross rent (monthly amount)
+   'WATP', # Water (yearly cost)
+   'RNTP', # Monthly rent
    'SMP', # Total payment on all second and junior mortgages and home equity loans
-   'WGTP', 
+   'WGTP', # TODO: Remove
    'CONP', # Condo fee
-   'ELEP',
-   'GASP',
-   'GRPIP',
-   'OCPIP',
-   'TAXP'
+   'ELEP', # Electricity (monthly cost)
+   'GASP', # Gas (monthly cost)
+   'GRPIP', # Gross rent as a percentage of household income past 12 months
+   'OCPIP', # Selected monthly owner costs as a percentage of household
+   'TAXP' # Property taxes (yearly amount)
 ]
 
 locationFeatures = [

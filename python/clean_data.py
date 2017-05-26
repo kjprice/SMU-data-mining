@@ -16,7 +16,6 @@ dollarFeatures = [
    'WATP', # Water (yearly cost)
    'RNTP', # Monthly rent
    'SMP', # Total payment on all second and junior mortgages and home equity loans
-   'WGTP', # TODO: Remove
    'CONP', # Condo fee
    'ELEP', # Electricity (monthly cost)
    'GASP', # Gas (monthly cost)

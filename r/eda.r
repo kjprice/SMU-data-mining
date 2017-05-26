@@ -1,10 +1,7 @@
 
-# head(df)
+nums = sapply(d, is.numeric)
+numeric.d = d[, nums]
 
-hist(d[,'PUMA'])
+large.nums = sapply(numeric.d, function (a) {max(a) > 10})
+large.d = numeric.d[, large.nums]
 
-hist(d[,'BATH'])
-
-print(table(d$BATH))
-
-library('maps')

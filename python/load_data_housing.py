@@ -6,8 +6,6 @@ import os
 print (sys.version)
 print (os.getcwd())
 
-os.chdir('/Users/kjprice/Library/Projects/smu/data-mining/Data Mining Project/')
-
 housing_raw = pd.read_csv('data/housing-subset-5percent.csv')
 
 

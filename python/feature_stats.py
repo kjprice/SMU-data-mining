@@ -1,7 +1,9 @@
 # TODO: replace with full file
+import pandas as pd
+import numpy as np
 
-housing_raw_a = pd.read_csv('data/ss13husa.csv')
-housing_raw_b = pd.read_csv('data/ss13husb.csv')
+housing_raw_a = pd.read_csv('data/ss13pusa.csv')
+housing_raw_b = pd.read_csv('data/ss13pusb.csv')
 
 housing_raw = pd.concat([housing_raw_a, housing_raw_b])
 
@@ -36,11 +38,9 @@ def specialfeatures():
 
 df_stats = specialfeatures()
 
-a = df_stats.ACCESS.unique()
+df_stats.transpose().to_csv('./data/stats-person.csv')
 
 print(df_stats)
 print('features with the most nulls')
 print(df_stats.loc['null_count'].sort_values(ascending=False).head())
 print(len(housing_full))
-
-df_stats.transpose().to_csv('./data/stats.csv')

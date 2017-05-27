@@ -1,5 +1,6 @@
 from pandas.tools.plotting import scatter_matrix
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # QOI: Any features that seem to determine income (PINCP)?
 
@@ -31,9 +32,18 @@ df.plot.scatter(x='JWMNP', y='PINCP')
 ### Scatterplot of Income and Person's Weight
 df.plot.scatter(x='PWGTP', y='PINCP')
 
+### Scatterplot of Income and Citizenship
+df.plot.scatter(x='CIT', y='PINCP')
+### Boxplot of Income and Citizenship
+df.boxplot(column='PINCP', by='CIT')
+### ViolinPlot of Income and Citizenship
+sns.violinplot(x="CIT", y="PINCP", data=df) # TODO: Add Legend
+
 ### Barplot of Income and Ability to speak English (1=Great, 4=Terrible) - No real information - lok at boxplot instead
-a = df.groupby('ENG').PINCP.sum().plot.bar()
+df.groupby('ENG').PINCP.sum().plot.bar()
 
 ### Boxplot of Income by Ability to speak English
 df.boxplot(column=['PINCP'], by='ENG')
+
+
 

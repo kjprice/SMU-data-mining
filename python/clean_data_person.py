@@ -1,5 +1,10 @@
 df = person_raw.copy(deep=True)
 
+df.dummy = True
+
+# Take rows where income is less than $150,000
+df_small_income = df[df.PINCP < 150000]
+
 dollarFeatures = [
     'PINCP', # Total person's income (signed)
     'PERNP', # Total person's earnings

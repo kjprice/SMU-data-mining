@@ -9,14 +9,17 @@ import seaborn as sns
 ### Boxplot: income
 df.PINCP.plot.box(figsize=(10,12))
 ### Boxplot: income (capped at $150,000) (TODO: come up with a better barplot - this is inaccurate)
-df[df.PINCP < 150000].PINCP.plot.box(figsize=(10,12))
+df_small_income.PINCP.plot.box(figsize=(10,12))
 
 ### Histogram: income
 df.PINCP.plot.hist(bins=100)
 ### Histogram: log(income) - not normal but less terrible
 df.PINCP.hist(log=True, bins=100)
 ### Histogram: income - cap at $150K
-df[df.PINCP < 150000].PINCP.hist(bins=100)
+df_small_income.PINCP.hist(bins=100)
+
+### Histogram of income-poverty-ration
+df.POVPIP.hist(bins=50)
 
 ### StackedBarplot of income response (19% response)
 response = pd.crosstab([df.dummy], df.FPINCP.astype(bool))
@@ -38,6 +41,10 @@ df.plot.scatter(x='CIT', y='PINCP')
 df.boxplot(column='PINCP', by='CIT')
 ### ViolinPlot of Income and Citizenship
 sns.violinplot(x="CIT", y="PINCP", data=df) # TODO: Add Legend
+sns.violinplot(x="CIT", y="PINCP", data=df_small_income) # TODO: Add Legend
+
+### Scatterplot: Person has child?
+df.plot.scatter(x='OC', y='PINCP')
 
 ### Barplot of Income and Ability to speak English (1=Great, 4=Terrible) - No real information - lok at boxplot instead
 df.groupby('ENG').PINCP.sum().plot.bar()

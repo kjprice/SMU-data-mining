@@ -17,8 +17,9 @@ df.PINCP.hist(log=True, bins=100)
 ### Histogram: income - cap at $150K
 df[df.PINCP < 150000].PINCP.hist(bins=100)
 
-
-
+### StackedBarplot of income response (19% response)
+response = pd.crosstab([df.dummy], df.FPINCP.astype(bool))
+response.div(response.sum(1).astype(float), axis=0).plot(kind='bar', stacked=True)
 # Bivariate Plots
 
 ### Scatterplot of all dollar features (TODO: get down to maybe 4 or less)

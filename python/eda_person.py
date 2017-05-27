@@ -18,6 +18,9 @@ df.PINCP.hist(log=True, bins=100)
 ### Histogram: income - cap at $150K
 df_small_income.PINCP.hist(bins=100)
 
+### Histogram of income-poverty-ration
+df.POVPIP.hist(bins=50)
+
 ### StackedBarplot of income response (19% response)
 response = pd.crosstab([df.dummy], df.FPINCP.astype(bool))
 response.div(response.sum(1).astype(float), axis=0).plot(kind='bar', stacked=True)

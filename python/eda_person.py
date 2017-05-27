@@ -10,6 +10,12 @@ df.PINCP.plot.box(figsize=(10,12))
 ### Boxplot: income (capped at $150,000) (TODO: come up with a better barplot - this is inaccurate)
 df[df.PINCP < 150000].PINCP.plot.box(figsize=(10,12))
 
+
+# Bivariate Plots
+
+### Scatterplot of all dollar features (TODO: get down to maybe 4 or less)
 scatter_matrix(df[dollarFeatures], figsize=(25, 20))
 
+### Scatterplot of Income and commute time
+df.plot.scatter(x='JWMNP', y='PINCP')
 

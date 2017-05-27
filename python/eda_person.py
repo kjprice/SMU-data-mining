@@ -10,6 +10,14 @@ df.PINCP.plot.box(figsize=(10,12))
 ### Boxplot: income (capped at $150,000) (TODO: come up with a better barplot - this is inaccurate)
 df[df.PINCP < 150000].PINCP.plot.box(figsize=(10,12))
 
+### Histogram: income
+df.PINCP.plot.hist(bins=100)
+### Histogram: log(income) - not normal but less terrible
+df.PINCP.hist(log=True, bins=100)
+### Histogram: income - cap at $150K
+df[df.PINCP < 150000].PINCP.hist(bins=100)
+
+
 
 # Bivariate Plots
 

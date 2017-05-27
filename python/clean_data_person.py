@@ -43,6 +43,10 @@ occupationFeatures = [
     'WKL', # When last worked
     'SCIENGP', # Field of Degree Science and Engineering Flag – NSF Definition
     'WRK', # Worked last week
+    'COW', # Class of worker
+    'NWLA', # On layoff from work
+    'NWLK', # Looking for work
+
 ]
 
 demographicFeatures = [
@@ -69,6 +73,8 @@ demographicFeatures = [
     'RACPI', # Other Pacific Islander recode (Other Pacific Islander alone or in
     'RACSOR', # Some other race recode (Some other race alone or in
     'RACWHT', # White recode (White alone or in combination with one or more
+    'WAOB', # World area of birth
+
 ]
 
 personalFeatures = [
@@ -109,12 +115,12 @@ militaryFeatures = [
     'MLPA', # Served September 2001 or later
     'MLPB', # Served August 1990 - August 2001 (including Persian Gulf War)
     'MLPCD', # Served May 1975 - July 1990
-
+    'MLPE', # Served Vietnam era (August 1964 - April 1975)
     'MLPFG', # Served February 1955 - July 1964
-
     'MLPI', # Served January 1947 - June 1950
-
+    'MLPH', # Served Korean War (July 1950 - January 1955)
     'MLPK', # Served November 1941 or earlier
+    'MLPJ', # Served World War II (December 1941 - December 1946)
 ]
 
 yearFeatures = [
@@ -146,3 +152,4 @@ insuranceFeatures = [
     'PRIVCOV', # Private health insurance coverage recode
     'PUBCOV', # Public health coverage recode
 ]
+

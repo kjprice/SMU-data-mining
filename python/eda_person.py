@@ -40,6 +40,9 @@ df.boxplot(column='PINCP', by='CIT')
 sns.violinplot(x="CIT", y="PINCP", data=df) # TODO: Add Legend
 sns.violinplot(x="CIT", y="PINCP", data=df_small_income) # TODO: Add Legend
 
+### Scatterplot: Person has child?
+df.plot.scatter(x='OC', y='PINCP')
+
 ### Barplot of Income and Ability to speak English (1=Great, 4=Terrible) - No real information - lok at boxplot instead
 df.groupby('ENG').PINCP.sum().plot.bar()
 

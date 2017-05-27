@@ -19,3 +19,9 @@ scatter_matrix(df[dollarFeatures], figsize=(25, 20))
 ### Scatterplot of Income and commute time
 df.plot.scatter(x='JWMNP', y='PINCP')
 
+### Barplot of Income and Ability to speak English (1=Great, 4=Terrible) - No real information - lok at boxplot instead
+a = df.groupby('ENG').PINCP.sum().plot.bar()
+
+### Boxplot of Income by Ability to speak English
+df.boxplot(column=['PINCP'], by='ENG')
+

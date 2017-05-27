@@ -5,8 +5,10 @@ import matplotlib.pyplot as plt
 
 # Univariate plots
 
-### Barplot: income
+### Boxplot: income
 df.PINCP.plot.box(figsize=(10,12))
+### Boxplot: income (capped at $150,000) (TODO: come up with a better barplot - this is inaccurate)
+df[df.PINCP < 150000].PINCP.plot.box(figsize=(10,12))
 
 scatter_matrix(df[dollarFeatures], figsize=(25, 20))
 

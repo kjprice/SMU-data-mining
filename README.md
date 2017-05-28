@@ -1,6 +1,6 @@
 # SMU-data-mining
 
-This is based on Kaggle's [2013 American Community Survey](https://www.kaggle.com/census/2013-american-community-survey) dataset with [data dictionary](https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMSDataDict13.txt).
+This is based on Kaggle's [2013 American Community Survey](https://www.kaggle.com/census/2013-american-community-survey) or this archived product can be [downloaded from](http://www2.census.gov/acs2013_1yr/pums/) dataset with [data dictionary](https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMSDataDict13.txt).
 
 ## Setup
 
@@ -20,10 +20,19 @@ If we are going to use PCA - be sure to scale the data. Use `from sklearn.prepro
 The shape files from the zipped data appear to be limited. It is missing data from the first 31 states. To get the real shape files, you can get them from source via ftp. I built a little script that should pull it all for you recursively:
 
 ```sh
+mkdir /data/person
+mkdir /data/housing
+mkdir /data/shapefiles
+cd /data
+wget -m https://www2.census.gov/acs2013_1yr/pums/csv_pus.zip
+wget -m https://www2.census.gov/acs2013_1yr/pums/csv_hus.zip
 wget -m ftp://ftp2.census.gov//geo/tiger/TIGER2013/PUMA/
-mkdir output
-cd output
-unzip '../ftp2.census.gov/geo/tiger/TIGER2013/PUMA/*'
+cd /data/person
+unzip '/data/csv_pus.zip'
+cd /data/housing
+unzip '/data/csv_hus.zip'
+cd /data/shapefiles
+unzip '/data/ftp2.census.gov/geo/tiger/TIGER2013/PUMA/*'
 ```
 
 ## Map:

@@ -5,7 +5,7 @@ df.dummy = True
 # Take rows where income is less than $150,000
 df_small_income = df[df.PINCP < 150000]
 
-dollarFeatures = [
+dollar_features = [
     'PINCP', # Total person's income (signed)
     'PERNP', # Total person's earnings
     'ADJINC', # Adjustment factor for income and earnings dollar amounts (6 implied decimal places)
@@ -19,13 +19,14 @@ dollarFeatures = [
     'SSIP', # Supplementary Security Income past 12 months
 ]
 
-locationFeatures = [
+location_features = [
     'PUMA', # Public use microdata area code (PUMA) based on 2010 Census definition
     'MIGPUMA', # Migration PUMA based on 2010 Census definition
     'POWPUMA', # Place of work PUMA based on 2010 Census definition
     'ST', # State Code
 ]
-occupationFeatures = [
+
+occupation_features = [
     'INDP', # Industry recode for 2013 and later based on 2012 IND codes
     'OCCP', # Occupation recode for 2012 and later based on 2010 OCC codes
     'POWSP', # Place of work - State or foreign country recode
@@ -54,7 +55,7 @@ occupationFeatures = [
 
 ]
 
-demographicFeatures = [
+demographic_features = [
     'ANC1P', # Recoded Detailed Ancestry - first entry
     'ANC2P', # Recoded Detailed Ancestry - second entry
     'LANP', # Language spoken at home
@@ -82,7 +83,7 @@ demographicFeatures = [
 
 ]
 
-personalFeatures = [
+personal_features = [
     'PWGTP', # Person's weight
     'POVPIP', # Income-to-poverty ratio recode
     'SPORDER', # Person number
@@ -90,7 +91,7 @@ personalFeatures = [
     'SEX', # Sex
 ]
 
-relationshipFeatures = [
+relationship_features = [
     'RELP', # Relationship
     'MSP', # Married, spouse present/spouse absent
     'GCM', # Length of time responsible for grandchildren
@@ -107,13 +108,13 @@ relationshipFeatures = [
     'RC', # Related child
 ]
 
-educationFeatures = [
+education_features = [
     'SCHL', # Educational attainment
     'SCHG', # Grade level attending
     'SCIENGRLP', # Field of Degree Science and Engineering Related Flag – NSF Definition
 ]
 
-militaryFeatures = [
+military_features = [
     'VPS', # Veteran period of service
     'DRAT', # Veteran service connected disability rating (percentage)
     'MIL', # Military service
@@ -128,13 +129,13 @@ militaryFeatures = [
     'MLPJ', # Served World War II (December 1941 - December 1946)
 ]
 
-yearFeatures = [
+year_features = [
     'CITWP', # Year of naturalization write-in
     'MARHYP', # Year last married
     'YOEP', # Year of entry
 ]
 
-disabilityFeatures = [
+disability_features = [
     'DDRS', # Self-care difficulty
     'DEAR', # Hearing difficulty
     'DEYE', # Vision difficulty
@@ -145,7 +146,7 @@ disabilityFeatures = [
     'DREM', # Cognitive difficulty
 ]
 
-insuranceFeatures = [
+insurance_features = [
     'HICOV', # Health insurance coverage recode
     'HINS1', # Insurance through a current or former employer or union
     'HINS2', # Insurance purchased directly from an insurance company

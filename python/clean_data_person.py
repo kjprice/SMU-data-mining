@@ -13,15 +13,126 @@ df_small_income = df[df.PINCP < 150000]
 ### Change from numeric to categorical (ordinal)
 df['CIT_CAT'] = df.CIT.astype('category').astype('str')
 df.CIT_CAT = df.CIT_CAT \
-    .replace('1', 'Born - USA') \
-    .replace('2', 'Born - USA Territory') \
-    .replace('3', 'Born - Abroad (American Parents)') \
-    .replace('4', 'Citizen - Naturalization') \
-    .replace('5', 'Not Citizen')
+    .replace('1', 'US Born') \
+    .replace('2', 'US Territory Born') \
+    .replace('3', 'Born Abroad)') \
+    .replace('4', 'Naturalized') \
+    .replace('5', 'Non-Citizen')
 
 df['OC_CAT'] = df.OC.astype('category').astype(bool)
 
-df['ENG_CAT'] = df.ENG.astype('category')
+df['ENG_CAT'] = df.ENG.astype('category').astype('str')
+df.ENG_CAT = df.ENG_CAT \
+    .replace('nan', 'Speaks only English') \
+    .replace('1.0', 'Very well') \
+    .replace('2.0', 'Well') \
+    .replace('3.0', 'Not well') \
+    .replace('4.0', 'Not at all')
+
+df['COW'] = df.COW.astype('category').astype('str')
+df.COW = df.COW \
+    .replace('b', 'child') \
+    .replace('1.0', 'Private for Profit') \
+    .replace('2.0', 'Private Non-Profit') \
+    .replace('3.0', 'Local Government') \
+    .replace('4.0', 'State Government') \
+    .replace('5.0', 'Federal Government') \
+    .replace('6.0', 'Self Employed (not incorportated)') \
+    .replace('7.0', 'Self Employed (incorporated)') \
+    .replace('8.0', 'Family Business - no pay') \
+    .replace('9.0', 'Unemployeed')
+
+df['JWTR'] = df.JWTR.astype('category').astype('str')
+df.JWTR = df.JWTR \
+    .replace('1.0', 'Car, truck, or van') \
+    .replace('2.0', 'Bus or trolley bus') \
+    .replace('3.0', 'Streetcar or trolley car') \
+    .replace('4.0', 'Subway or elevated') \
+    .replace('5.0', 'Railroad') \
+    .replace('6.0', 'Ferryboat') \
+    .replace('7.0', 'Taxicab') \
+    .replace('8.0', 'Motorcycle') \
+    .replace('9.0', 'Bicycle') \
+    .replace('10.0', 'Walked') \
+    .replace('11.0', 'Worked at home') \
+    .replace('12.0', 'Other method') \
+    .replace('nan', 'Non-Commuter (unemployed, child, military)')
+
+df['ST'] = df.ST.astype('category').astype('str')
+df.ST = df.ST \
+    .replace('1', 'AL') \
+    .replace('2', 'AK') \
+    .replace('4', 'AZ') \
+    .replace('5', 'AR') \
+    .replace('6', 'CA') \
+    .replace('8', 'CO') \
+    .replace('9', 'CT') \
+    .replace('10', 'DE') \
+    .replace('11', 'DC') \
+    .replace('12', 'FL') \
+    .replace('13', 'GA') \
+    .replace('15', 'HI') \
+    .replace('16', 'ID') \
+    .replace('17', 'IL') \
+    .replace('18', 'IN') \
+    .replace('19', 'IA') \
+    .replace('20', 'KS') \
+    .replace('21', 'KY') \
+    .replace('22', 'LA') \
+    .replace('23', 'ME') \
+    .replace('24', 'MD') \
+    .replace('25', 'MA') \
+    .replace('26', 'MI') \
+    .replace('27', 'MN') \
+    .replace('28', 'MS') \
+    .replace('29', 'MO') \
+    .replace('30', 'MT') \
+    .replace('31', 'NE') \
+    .replace('32', 'NV') \
+    .replace('33', 'NH') \
+    .replace('34', 'NJ') \
+    .replace('35', 'NM') \
+    .replace('36', 'NY') \
+    .replace('37', 'NC') \
+    .replace('38', 'ND') \
+    .replace('39', 'OH') \
+    .replace('40', 'OK') \
+    .replace('41', 'OR') \
+    .replace('42', 'PA') \
+    .replace('44', 'RI') \
+    .replace('45', 'SC') \
+    .replace('46', 'SD') \
+    .replace('47', 'TN') \
+    .replace('48', 'TX') \
+    .replace('49', 'UT') \
+    .replace('50', 'VT') \
+    .replace('51', 'VA') \
+    .replace('53', 'WA') \
+    .replace('54', 'WV') \
+    .replace('55', 'WI') \
+    .replace('56', 'WY') \
+    .replace('72', 'PR')
+
+df['GCL'] = df.GCL.astype('category').astype('str')
+df.GCL = df.GCL \
+    .replace('1.0', 'Grandparents living with Grandchildren') \
+    .replace('2.0', 'Grandparents do not live with grandchildren') \
+    .replace('nan', 'less than 30 years old')
+
+df['MAR'] = df.MAR.astype('category').astype('str')
+df.MAR = df.MAR \
+    .replace('1', 'Married') \
+    .replace('2', 'Widowed') \
+    .replace('3', 'Divorced') \
+    .replace('4', 'Separated') \
+    .replace('5', 'Never Married') \
+
+df['SEX'] = df.SEX.astype('category').astype('str')
+df.SEX = df.SEX \
+    .replace('1', 'Male') \
+    .replace('2', 'Female')
+
+
 
 important_continuous_features = [
     'PINCP',    # Total person's income (signed)
@@ -29,12 +140,15 @@ important_continuous_features = [
     'JWMNP',    # Travel time to work (continuous)
     'AGEP',     # Age of person (continuous 0-95)
     'PWGTP',    # Person's weight (continuous)
+    'PAP',      # Public assistance income in past 12 months
 ]
 
 import_categorical_features = [
     'CIT_CAT',  # Citizenship status (categorical - string)
     'OC_CAT',   # Own child (Boolean)
     'ENG_CAT'   # Ability to speak English (ordinal 1-4)
+    'COW'   # Class of worker (categorical - string)
+    
 ]
 
 important_features = important_continuous_features + import_categorical_features;
@@ -193,4 +307,6 @@ insurance_features = [
     'PRIVCOV', # Private health insurance coverage recode
     'PUBCOV', # Public health coverage recode
 ]
+
+
 

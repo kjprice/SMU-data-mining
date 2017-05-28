@@ -133,7 +133,7 @@ df.SEX = df.SEX \
     .replace('2', 'Female')
 
 
-
+### Define important features
 important_continuous_features = [
     'PINCP',    # Total person's income (signed)
     'POVPIP',   # Income-to-poverty ratio recode (continuous)
@@ -142,14 +142,13 @@ important_continuous_features = [
     'PWGTP',    # Person's weight (continuous)
     'PAP',      # Public assistance income in past 12 months
 ]
-
 import_categorical_features = [
     'CIT_CAT',  # Citizenship status (categorical - string)
     'OC_CAT',   # Own child (Boolean)
-    'ENG_CAT',   # Ability to speak English (ordinal 1-4)
-    'COW',   # Class of worker (categorical - string)
+    'ENG_CAT',  # Ability to speak English (ordinal 1-4)
+    'COW',      # Class of worker (categorical - string)
+    'PUMA',     # # Public use microdata area code (PUMA) based on 2010 Census definition
 ]
-
 important_features = important_continuous_features + import_categorical_features;
 
 

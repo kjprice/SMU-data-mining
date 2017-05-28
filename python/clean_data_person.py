@@ -21,7 +21,28 @@ df.CIT_CAT = df.CIT_CAT \
 
 df['OC_CAT'] = df.OC.astype('category').astype(bool)
 
-df['ENG_CAT'] = df.ENG.astype('category')
+df['ENG_CAT'] = df.ENG.astype('category').astype('str')
+df.ENG_CAT = df.ENG_CAT \
+    .replace('nan', 'Speaks only English') \
+    .replace('1.0', 'Very well') \
+    .replace('2.0', 'Well') \
+    .replace('3.0', 'Not well') \
+    .replace('4.0', 'Not at all')
+
+df['COW'] = df.COW.astype('category').astype('str')
+df.COW = df.COW \
+    .replace('b', 'child') \
+    .replace('1.0', 'Private for Profit') \
+    .replace('2.0', 'Private Non-Profit') \
+    .replace('3.0', 'Local Government') \
+    .replace('4.0', 'State Government') \
+    .replace('5.0', 'Federal Government') \
+    .replace('6.0', 'Self Employed (not incorportated)') \
+    .replace('7.0', 'Self Employed (incorporated)') \
+    .replace('8.0', 'Family Business - no pay') \
+    .replace('9.0', 'Unemployeed')
+
+
 
 important_continuous_features = [
     'PINCP',    # Total person's income (signed)
@@ -35,6 +56,8 @@ import_categorical_features = [
     'CIT_CAT',  # Citizenship status (categorical - string)
     'OC_CAT',   # Own child (Boolean)
     'ENG_CAT'   # Ability to speak English (ordinal 1-4)
+    'COW'   # Class of worker (categorical - string)
+    
 ]
 
 important_features = important_continuous_features + import_categorical_features;

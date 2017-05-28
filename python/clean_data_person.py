@@ -197,7 +197,7 @@ occupation_features = [
     'SCH', # School enrollment
     'SFN', # Subfamily number
     'WKL', # When last worked
-    'SCIENGP', # Field of Degree Science and Engineering Flag – NSF Definition
+    'SCIENGP', # Field of Degree Science and Engineering Flag - NSF Definition
     'WRK', # Worked last week
     'COW', # Class of worker
     'NWLA', # On layoff from work
@@ -261,7 +261,7 @@ relationship_features = [
 education_features = [
     'SCHL', # Educational attainment
     'SCHG', # Grade level attending
-    'SCIENGRLP', # Field of Degree Science and Engineering Related Flag – NSF Definition
+    'SCIENGRLP', # Field of Degree Science and Engineering Related Flag - NSF Definition
 ]
 
 military_features = [

@@ -68,7 +68,7 @@ plt.ylabel('Income')
 
 a = df.ENG.astype('category')
 
-### Multi-faceted plotting.  commute transportation with time for commuting and total income (Need to create legend)
+### Multi-faceted plotting.  commute transportation with time for commuting and total income - Disregard: use scatter plot above
 sns.set(style="ticks")
 
 df_travel = pd.DataFrame(np.c_[df.PINCP, df.JWMNP, df.JWTR],
@@ -77,10 +77,6 @@ grid = sns.FacetGrid(df, col="JWTR", hue="JWTR", col_wrap=4)
 grid.map(plt.axhline, y=0, ls=":", c=".5")
 grid.map(plt.plot, "JWMNP", "PINCP", marker="o", ms=4)
 grid.fig.tight_layout(w_pad=1)
-### Change from numeric to categorical (ordinal)
-
-
-
 
 
 ### Simple plot of years of education and total income
@@ -130,3 +126,14 @@ df[df.FPINCP == 0].PINCP.head()
 ### ALL non-null except: POVPIP: 96% && JWMNP 54%
 df[important_features].info()
 
+
+### Attempt graph for the grouped by gender and marital
+df_grouped = df_poverty.groupby(by=['MAR', 'SEX'])
+genderpov=df_grouped.MAR.count()
+genderpov_df = genderpov.to_frame('genderpov')
+print (genderpov_df)
+print (genderpov_df.unstack())
+ax = genderpov.unstack().plot(kind='bar')
+
+### Attempt for stacked graph
+genderpov_df.plot(kind='barh', stacked=True)

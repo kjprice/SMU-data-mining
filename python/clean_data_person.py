@@ -5,6 +5,16 @@ df.dummy = True
 # Take rows where income is less than $150,000
 df_small_income = df[df.PINCP < 150000]
 
+important_features = [
+    'PINCP',    # Total person's income (signed)
+    'POVPIP',   # Income-to-poverty ratio recode
+    'JWMNP',    # Travel time to work
+    'PWGTP',    # Person's weight
+    'CIT',      # Citizenship status
+    'OC',       # Own child
+    'ENG'       # Ability to speak English
+]
+
 dollar_features = [
     'PINCP', # Total person's income (signed)
     'PERNP', # Total person's earnings

@@ -66,8 +66,6 @@ df.boxplot(column=['PINCP'], by='ENG')
 plt.xlabel('Rating of ability to speak English')
 plt.ylabel('Income')
 
-a = df.ENG.astype('category')
-
 ### Multi-faceted plotting.  commute transportation with time for commuting and total income (Need to create legend)
 sns.set(style="ticks")
 

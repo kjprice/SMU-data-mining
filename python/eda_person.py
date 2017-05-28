@@ -84,6 +84,28 @@ grid.fig.tight_layout(w_pad=1)
 #           12 .Other method
 
 
+### Simple plot of years of education and total income
+%matplotlib inline
+plt.plot(df.SCHL, df.PINCP)  
+plt.xlabel('Years of Education')
+plt.ylabel('Income')
+
+
+### Summary statistics of age of responses with income poverty ratio less than 200 (Determine the right # for the poverty)
+## Excluding children
+df_adult = df[df.AGEP > 18]
+adult_pov = df_adult.AGEP[df_adult.POVPIP<200]
+adult_pov.describe()
+## Including children
+all_pov = df.AGEP[df.POVPIP<200]
+all_pov.describe()
+## Only Children
+df_child = df[df.AGEP <= 18]
+pov_child = df_child.AGEP[df_child.POVPIP<200]
+pov_child.describe()
+
+
+
 
 
 

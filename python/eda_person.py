@@ -19,6 +19,9 @@ df.PINCP.hist(log=True, bins=100)
 ### Histogram: income - cap at $150K
 df_small_income.PINCP.hist(bins=100)
 
+### Histogram of person's age
+df.AGEP.hist(bins=40)
+
 ### Histogram of income-poverty-ration
 df.POVPIP.hist(bins=50)
 
@@ -28,7 +31,7 @@ response.div(response.sum(1).astype(float), axis=0).plot(kind='bar', stacked=Tru
 # Bivariate Plots
 
 ### Scatterplot of all dollar features (TODO: get down to maybe 4 or less)
-scatter_matrix(df[dollarFeatures], figsize=(25, 20))
+scatter_matrix(df[important_continuous_features], figsize=(12,10))
 
 ### Scatterplot of Income and commute time
 df.plot.scatter(x='JWMNP', y='PINCP')
@@ -60,6 +63,7 @@ df.boxplot(column=['PINCP'], by='ENG')
 plt.xlabel('Rating of ability to speak English')
 plt.ylabel('Income')
 
+a = df.ENG.astype('category')
 
 ### Multi-faceted plotting.  commute transportation with time for commuting and total income (Need to create legend)
 sns.set(style="ticks")

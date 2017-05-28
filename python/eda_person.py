@@ -32,6 +32,9 @@ scatter_matrix(df[dollarFeatures], figsize=(25, 20))
 
 ### Scatterplot of Income and commute time
 df.plot.scatter(x='JWMNP', y='PINCP')
+plt.xlabel('Commute Time in minutes')
+plt.ylabel('Income')
+
 
 ### Scatterplot of Income and Person's Weight  
 df.plot.scatter(x='PWGTP', y='PINCP')
@@ -56,5 +59,31 @@ df.groupby('ENG').PINCP.sum().plot.bar()
 df.boxplot(column=['PINCP'], by='ENG')
 plt.xlabel('Rating of ability to speak English')
 plt.ylabel('Income')
+
+
+### Multi-faceted plotting.  commute transportation with time for commuting and total income (Need to create legend)
+sns.set(style="ticks")
+
+df_travel = pd.DataFrame(np.c_[df.PINCP, df.JWMNP, df.JWTR],
+                  columns=["PINCP", "JWMNP", "JWTR"])
+grid = sns.FacetGrid(df, col="JWTR", hue="JWTR", col_wrap=4)
+grid.map(plt.axhline, y=0, ls=":", c=".5")
+grid.map(plt.plot, "JWMNP", "PINCP", marker="o", ms=4)
+grid.fig.tight_layout(w_pad=1)
+#           01 .Car, truck, or van
+#           02 .Bus or trolley bus
+#           03 .Streetcar or trolley car (carro publico in Puerto Rico)
+#           04 .Subway or elevated
+#           05 .Railroad
+#           06 .Ferryboat           
+#           07 .Taxicab
+#           08 .Motorcycle
+#           09 .Bicycle
+#           10 .Walked
+#           11 .Worked at home
+#           12 .Other method
+
+
+
 
 

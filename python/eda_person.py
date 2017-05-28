@@ -114,11 +114,10 @@ plt.plot(df_poverty.POVPIP, df_poverty.PINCP)
 plt.xlabel('Income to Poverty Ratio')
 plt.ylabel('Income')
 
+### Confirm negative income values are business owners
 df_NegativeInc = df[df.PINCP <0]
+df_NegativeInc.COW.value_counts().plot(kind='barh')
 
-### Confirm negative income values are business owneres
-
-print (df_NegativeInc.COW)
 
 
 

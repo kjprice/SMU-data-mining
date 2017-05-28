@@ -68,24 +68,32 @@ a = df.ENG.astype('category')
 ### Multi-faceted plotting.  commute transportation with time for commuting and total income (Need to create legend)
 sns.set(style="ticks")
 
+### Added categorical names for transportation type (does not work in multi-facet)
+df['JWTR_CAT'] = df.CIT.astype('category').astype('str')
+df.JWTR_CAT = df.JWTR_CAT \
+    .replace('1', 'Car, truck, or van') \
+    .replace('2', 'Bus or trolley bus') \
+    .replace('3', 'Streetcar or trolley car') \
+    .replace('4', 'Subway or elevated') \
+    .replace('5', 'Railroad') \
+    .replace('6', 'Ferryboat') \
+    .replace('7', 'Taxicab') \
+    .replace('8', 'Motorcycle') \
+    .replace('9', 'Bicycle') \
+    .replace('10', 'Walked') \
+    .replace('11', 'Worked at home') \
+    .replace('12', 'Other method')
+
 df_travel = pd.DataFrame(np.c_[df.PINCP, df.JWMNP, df.JWTR],
                   columns=["PINCP", "JWMNP", "JWTR"])
 grid = sns.FacetGrid(df, col="JWTR", hue="JWTR", col_wrap=4)
 grid.map(plt.axhline, y=0, ls=":", c=".5")
 grid.map(plt.plot, "JWMNP", "PINCP", marker="o", ms=4)
 grid.fig.tight_layout(w_pad=1)
-#           01 .Car, truck, or van
-#           02 .Bus or trolley bus
-#           03 .Streetcar or trolley car (carro publico in Puerto Rico)
-#           04 .Subway or elevated
-#           05 .Railroad
-#           06 .Ferryboat           
-#           07 .Taxicab
-#           08 .Motorcycle
-#           09 .Bicycle
-#           10 .Walked
-#           11 .Worked at home
-#           12 .Other method
+### Change from numeric to categorical (ordinal)
+
+
+
 
 
 ### Simple plot of years of education and total income
@@ -94,7 +102,7 @@ plt.plot(df.SCHL, df.PINCP)
 plt.xlabel('Years of Education')
 plt.ylabel('Income')
 
-
+### Need to eliminate all this since children have been removed from the data ####
 ### Summary statistics of age of responses with income poverty ratio less than 200 (Determine the right # for the poverty)
 ## Excluding children
 df_adult = df[df.AGEP > 18]
@@ -108,7 +116,22 @@ df_child = df[df.AGEP <= 18]
 pov_child = df_child.AGEP[df_child.POVPIP<200]
 pov_child.describe()
 
+### Plot Income and poverty ratio
+plt.plot(df.POVPIP, df.PINCP)  
+plt.xlabel('Income to Poverty Ratio')
+plt.ylabel('Income')
 
+### Create dataframe of only individuals considered in poverty
+df_poverty = df[df.POVPIP <100]
+plt.plot(df_poverty.POVPIP, df_poverty.PINCP)  
+plt.xlabel('Income to Poverty Ratio')
+plt.ylabel('Income')
+
+df_NegativeInc = df[df.PINCP <0]
+
+### Confirm negative income values are business owneres
+
+print (df_NegativeInc.COW)
 
 
 

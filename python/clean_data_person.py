@@ -1,5 +1,9 @@
 df = person_raw.copy(deep=True)
 
+print ('%d rows before removing children' % (len(df)))
+df = df[df.AGEP > 18]
+print('%d rows after removing children' % (len(df)))
+
 df.dummy = True
 
 # Take rows where income is less than $150,000
@@ -23,10 +27,11 @@ important_features = [
     'PINCP',    # Total person's income (signed)
     'POVPIP',   # Income-to-poverty ratio recode (continuous)
     'JWMNP',    # Travel time to work (continuous)
+    'AGEP',     # Age of person (continuous 0-95)
     'PWGTP',    # Person's weight (continuous)
-    'CIT_CAT',      # Citizenship status (categorical - string)
-    'OC_CAT',       # Own child (Boolean)
-    'ENG_CAT'       # Ability to speak English (ordinal 1-4)
+    'CIT_CAT',  # Citizenship status (categorical - string)
+    'OC_CAT',   # Own child (Boolean)
+    'ENG_CAT'   # Ability to speak English (ordinal 1-4)
 ]
 
 

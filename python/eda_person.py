@@ -19,6 +19,9 @@ df.PINCP.hist(log=True, bins=100)
 ### Histogram: income - cap at $150K
 df_small_income.PINCP.hist(bins=100)
 
+### Histogram of person's age
+df.AGEP.hist(bins=40)
+
 ### Histogram of income-poverty-ration
 df.POVPIP.hist(bins=50)
 
@@ -57,4 +60,5 @@ df.boxplot(column=['PINCP'], by='ENG')
 plt.xlabel('Rating of ability to speak English')
 plt.ylabel('Income')
 
+a = df.ENG.astype('category')
 

@@ -42,6 +42,21 @@ df.COW = df.COW \
     .replace('8.0', 'Family Business - no pay') \
     .replace('9.0', 'Unemployeed')
 
+df['JWTR'] = df.JWTR.astype('category').astype('str')
+df.JWTR = df.JWTR \
+    .replace('1.0', 'Car, truck, or van') \
+    .replace('2.0', 'Bus or trolley bus') \
+    .replace('3.0', 'Streetcar or trolley car') \
+    .replace('4.0', 'Subway or elevated') \
+    .replace('5.0', 'Railroad') \
+    .replace('6.0', 'Ferryboat') \
+    .replace('7.0', 'Taxicab') \
+    .replace('8.0', 'Motorcycle') \
+    .replace('9.0', 'Bicycle') \
+    .replace('10.0', 'Walked') \
+    .replace('11.0', 'Worked at home') \
+    .replace('12.0', 'Other method') \
+    .replace('nan', 'Non-Commuter (unemployed, child, military)')
 
 
 important_continuous_features = [

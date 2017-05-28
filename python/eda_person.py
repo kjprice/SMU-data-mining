@@ -68,22 +68,6 @@ a = df.ENG.astype('category')
 ### Multi-faceted plotting.  commute transportation with time for commuting and total income (Need to create legend)
 sns.set(style="ticks")
 
-### Added categorical names for transportation type (does not work in multi-facet)
-df['JWTR_CAT'] = df.CIT.astype('category').astype('str')
-df.JWTR_CAT = df.JWTR_CAT \
-    .replace('1', 'Car, truck, or van') \
-    .replace('2', 'Bus or trolley bus') \
-    .replace('3', 'Streetcar or trolley car') \
-    .replace('4', 'Subway or elevated') \
-    .replace('5', 'Railroad') \
-    .replace('6', 'Ferryboat') \
-    .replace('7', 'Taxicab') \
-    .replace('8', 'Motorcycle') \
-    .replace('9', 'Bicycle') \
-    .replace('10', 'Walked') \
-    .replace('11', 'Worked at home') \
-    .replace('12', 'Other method')
-
 df_travel = pd.DataFrame(np.c_[df.PINCP, df.JWMNP, df.JWTR],
                   columns=["PINCP", "JWMNP", "JWTR"])
 grid = sns.FacetGrid(df, col="JWTR", hue="JWTR", col_wrap=4)

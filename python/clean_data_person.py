@@ -58,6 +58,81 @@ df.JWTR = df.JWTR \
     .replace('12.0', 'Other method') \
     .replace('nan', 'Non-Commuter (unemployed, child, military)')
 
+df['ST'] = df.ST.astype('category').astype('str')
+df.ST = df.ST \
+    .replace('1', 'AL') \
+    .replace('2', 'AK') \
+    .replace('4', 'AZ') \
+    .replace('5', 'AR') \
+    .replace('6', 'CA') \
+    .replace('8', 'CO') \
+    .replace('9', 'CT') \
+    .replace('10', 'DE') \
+    .replace('11', 'DC') \
+    .replace('12', 'FL') \
+    .replace('13', 'GA') \
+    .replace('15', 'HI') \
+    .replace('16', 'ID') \
+    .replace('17', 'IL') \
+    .replace('18', 'IN') \
+    .replace('19', 'IA') \
+    .replace('20', 'KS') \
+    .replace('21', 'KY') \
+    .replace('22', 'LA') \
+    .replace('23', 'ME') \
+    .replace('24', 'MD') \
+    .replace('25', 'MA') \
+    .replace('26', 'MI') \
+    .replace('27', 'MN') \
+    .replace('28', 'MS') \
+    .replace('29', 'MO') \
+    .replace('30', 'MT') \
+    .replace('31', 'NE') \
+    .replace('32', 'NV') \
+    .replace('33', 'NH') \
+    .replace('34', 'NJ') \
+    .replace('35', 'NM') \
+    .replace('36', 'NY') \
+    .replace('37', 'NC') \
+    .replace('38', 'ND') \
+    .replace('39', 'OH') \
+    .replace('40', 'OK') \
+    .replace('41', 'OR') \
+    .replace('42', 'PA') \
+    .replace('44', 'RI') \
+    .replace('45', 'SC') \
+    .replace('46', 'SD') \
+    .replace('47', 'TN') \
+    .replace('48', 'TX') \
+    .replace('49', 'UT') \
+    .replace('50', 'VT') \
+    .replace('51', 'VA') \
+    .replace('53', 'WA') \
+    .replace('54', 'WV') \
+    .replace('55', 'WI') \
+    .replace('56', 'WY') \
+    .replace('72', 'PR')
+
+df['GCL'] = df.GCL.astype('category').astype('str')
+df.GCL = df.GCL \
+    .replace('1.0', 'Grandparents living with Grandchildren') \
+    .replace('2.0', 'Grandparents do not live with grandchildren') \
+    .replace('nan', 'less than 30 years old')
+
+df['MAR'] = df.MAR.astype('category').astype('str')
+df.MAR = df.MAR \
+    .replace('1', 'Married') \
+    .replace('2', 'Widowed') \
+    .replace('3', 'Divorced') \
+    .replace('4', 'Separated') \
+    .replace('5', 'Never Married') \
+
+df['SEX'] = df.SEX.astype('category').astype('str')
+df.SEX = df.SEX \
+    .replace('1', 'Male') \
+    .replace('2', 'Female')
+
+
 
 important_continuous_features = [
     'PINCP',    # Total person's income (signed)
@@ -65,6 +140,7 @@ important_continuous_features = [
     'JWMNP',    # Travel time to work (continuous)
     'AGEP',     # Age of person (continuous 0-95)
     'PWGTP',    # Person's weight (continuous)
+    'PAP',      # Public assistance income in past 12 months
 ]
 
 import_categorical_features = [

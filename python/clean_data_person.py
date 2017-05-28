@@ -146,9 +146,8 @@ important_continuous_features = [
 import_categorical_features = [
     'CIT_CAT',  # Citizenship status (categorical - string)
     'OC_CAT',   # Own child (Boolean)
-    'ENG_CAT'   # Ability to speak English (ordinal 1-4)
-    'COW'   # Class of worker (categorical - string)
-    
+    'ENG_CAT',   # Ability to speak English (ordinal 1-4)
+    'COW',   # Class of worker (categorical - string)
 ]
 
 important_features = important_continuous_features + import_categorical_features;

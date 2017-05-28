@@ -126,7 +126,7 @@ df_NegativeInc.COW.value_counts().plot(kind='barh')
 ### Apparently, when the flag for a variables equals 0, there still might be a value for the referenced attribute
 df[df.FPINCP == 0].PINCP.head()
 
-
-
-
+### Count number of non-null observations for each feature
+### ALL non-null except: POVPIP: 96% && JWMNP 54%
+df[important_features].info()
 

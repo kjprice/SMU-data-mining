@@ -4,10 +4,31 @@ print ('%d rows before removing children' % (len(df)))
 df = df[df.AGEP > 18]
 print('%d rows after removing children' % (len(df)))
 
+### This seems to be necessary to make stacked barplots on one feature
 df.dummy = True
 
 # Take rows where income is less than $150,000
 df_small_income = df[df.PINCP < 150000]
+
+
+### Define important features
+important_continuous_features = [
+    'PINCP',    # Total person's income (signed)
+    'POVPIP',   # Income-to-poverty ratio recode (continuous)
+    'JWMNP',    # Travel time to work (continuous)
+    'AGEP',     # Age of person (continuous 0-95)
+    'PWGTP',    # Person's weight (continuous)
+    'PAP',      # Public assistance income in past 12 months
+]
+import_categorical_features = [
+    'CIT_CAT',  # Citizenship status (categorical - string)
+    'OC_CAT',   # Own child (Boolean)
+    'ENG_CAT',  # Ability to speak English (ordinal 1-4)
+    'COW',      # Class of worker (categorical - string)
+    'PUMA',     # # Public use microdata area code (PUMA) based on 2010 Census definition
+]
+important_features = important_continuous_features + import_categorical_features;
+
 
 # Clean important features
 ### Change from numeric to categorical (ordinal)
@@ -131,25 +152,6 @@ df['SEX'] = df.SEX.astype('category').astype('str')
 df.SEX = df.SEX \
     .replace('1', 'Male') \
     .replace('2', 'Female')
-
-
-### Define important features
-important_continuous_features = [
-    'PINCP',    # Total person's income (signed)
-    'POVPIP',   # Income-to-poverty ratio recode (continuous)
-    'JWMNP',    # Travel time to work (continuous)
-    'AGEP',     # Age of person (continuous 0-95)
-    'PWGTP',    # Person's weight (continuous)
-    'PAP',      # Public assistance income in past 12 months
-]
-import_categorical_features = [
-    'CIT_CAT',  # Citizenship status (categorical - string)
-    'OC_CAT',   # Own child (Boolean)
-    'ENG_CAT',  # Ability to speak English (ordinal 1-4)
-    'COW',      # Class of worker (categorical - string)
-    'PUMA',     # # Public use microdata area code (PUMA) based on 2010 Census definition
-]
-important_features = important_continuous_features + import_categorical_features;
 
 
 dollar_features = [

@@ -13,11 +13,11 @@ df_small_income = df[df.PINCP < 150000]
 ### Change from numeric to categorical (ordinal)
 df['CIT_CAT'] = df.CIT.astype('category').astype('str')
 df.CIT_CAT = df.CIT_CAT \
-    .replace('1', 'Born - USA') \
-    .replace('2', 'Born - USA Territory') \
-    .replace('3', 'Born - Abroad (American Parents)') \
-    .replace('4', 'Citizen - Naturalization') \
-    .replace('5', 'Not Citizen')
+    .replace('1', 'US Born') \
+    .replace('2', 'US Territory Born') \
+    .replace('3', 'Born Abroad)') \
+    .replace('4', 'Naturalized') \
+    .replace('5', 'Non-Citizen')
 
 df['OC_CAT'] = df.OC.astype('category').astype(bool)
 
@@ -307,4 +307,6 @@ insurance_features = [
     'PRIVCOV', # Private health insurance coverage recode
     'PUBCOV', # Public health coverage recode
 ]
+
+
 

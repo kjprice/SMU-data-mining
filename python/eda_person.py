@@ -49,7 +49,7 @@ plt.ylabel('Income')
 ### Boxplot of Income and Citizenship
 df.boxplot(column='PINCP', by='CIT')
 ### ViolinPlot of Income and Citizenship
-sns.violinplot(x="CIT", y="PINCP", data=df) # TODO: Add Legend
+sns.violinplot(x="CIT_CAT", y="PINCP", data=df) 
 sns.violinplot(x="CIT", y="PINCP", data=df_small_income) # TODO: Add Legend
 
 ### Scatterplot: Person has child?

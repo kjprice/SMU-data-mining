@@ -9,7 +9,7 @@ housing_full = df.select_dtypes(include=[np.number])
 def specialfeatures():
    data = {}
    for column in housing_full:
-      if column[0:4] == 'wgtp':
+      if column[0:4] == 'wgtp' or column[0:5] == 'pwgtp':
          continue
       feature = housing_full[column]
       d = []

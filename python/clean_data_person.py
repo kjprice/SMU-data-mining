@@ -79,6 +79,7 @@ df.JWTR = df.JWTR \
     .replace('12.0', 'Other method') \
     .replace('nan', 'Non-Commuter (unemployed, child, military)')
 
+df['PUMA'] = df.PUMA.astype('category')
 df['ST'] = df.ST.astype('category').astype('str')
 df.ST = df.ST \
     .replace('1', 'AL') \

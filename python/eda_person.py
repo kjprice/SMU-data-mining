@@ -121,4 +121,12 @@ df_NegativeInc.COW.value_counts().plot(kind='barh')
 
 
 
+# Misc
+
+### Apparently, when the flag for a variables equals 0, there still might be a value for the referenced attribute
+df[df.FPINCP == 0].PINCP.head()
+
+
+
+
 

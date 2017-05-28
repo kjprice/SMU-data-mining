@@ -5,15 +5,30 @@ df.dummy = True
 # Take rows where income is less than $150,000
 df_small_income = df[df.PINCP < 150000]
 
+# Clean important features
+### Change from numeric to categorical (ordinal)
+df['CIT_CAT'] = df.CIT.astype('category').astype('str')
+df.CIT_CAT = df.CIT_CAT \
+    .replace('1', 'Born - USA') \
+    .replace('2', 'Born - USA Territory') \
+    .replace('3', 'Born - Abroad (American Parents)') \
+    .replace('4', 'Citizen - Naturalization') \
+    .replace('5', 'Not Citizen')
+
+df['OC_CAT'] = df.OC.astype('category').astype(bool)
+
+df['ENG_CAT'] = df.ENG.astype('category')
+
 important_features = [
     'PINCP',    # Total person's income (signed)
-    'POVPIP',   # Income-to-poverty ratio recode
-    'JWMNP',    # Travel time to work
-    'PWGTP',    # Person's weight
-    'CIT',      # Citizenship status
-    'OC',       # Own child
-    'ENG'       # Ability to speak English
+    'POVPIP',   # Income-to-poverty ratio recode (continuous)
+    'JWMNP',    # Travel time to work (continuous)
+    'PWGTP',    # Person's weight (continuous)
+    'CIT_CAT',      # Citizenship status (categorical - string)
+    'OC_CAT',       # Own child (Boolean)
+    'ENG_CAT'       # Ability to speak English (ordinal 1-4)
 ]
+
 
 dollar_features = [
     'PINCP', # Total person's income (signed)

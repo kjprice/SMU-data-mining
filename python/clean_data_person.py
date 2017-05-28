@@ -23,16 +23,21 @@ df['OC_CAT'] = df.OC.astype('category').astype(bool)
 
 df['ENG_CAT'] = df.ENG.astype('category')
 
-important_features = [
+important_continuous_features = [
     'PINCP',    # Total person's income (signed)
     'POVPIP',   # Income-to-poverty ratio recode (continuous)
     'JWMNP',    # Travel time to work (continuous)
     'AGEP',     # Age of person (continuous 0-95)
     'PWGTP',    # Person's weight (continuous)
+]
+
+import_categorical_features = [
     'CIT_CAT',  # Citizenship status (categorical - string)
     'OC_CAT',   # Own child (Boolean)
     'ENG_CAT'   # Ability to speak English (ordinal 1-4)
 ]
+
+important_features = important_continuous_features + import_categorical_features;
 
 
 dollar_features = [

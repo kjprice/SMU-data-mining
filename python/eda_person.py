@@ -31,7 +31,7 @@ response.div(response.sum(1).astype(float), axis=0).plot(kind='bar', stacked=Tru
 # Bivariate Plots
 
 ### Scatterplot of all dollar features (TODO: get down to maybe 4 or less)
-scatter_matrix(df[dollarFeatures], figsize=(25, 20))
+scatter_matrix(df[important_continuous_features], figsize=(12,10))
 
 ### Scatterplot of Income and commute time
 df.plot.scatter(x='JWMNP', y='PINCP')

@@ -12,6 +12,7 @@ df.PINCP.plot.box(figsize=(10,12))
 df_small_income.PINCP.plot.box(figsize=(10,12))
 
 ### Histogram: income
+plt.xlabel('Income')
 df.PINCP.plot.hist(bins=100)
 ### Histogram: log(income) - not normal but less terrible
 df.PINCP.hist(log=True, bins=100)
@@ -32,11 +33,13 @@ scatter_matrix(df[dollarFeatures], figsize=(25, 20))
 ### Scatterplot of Income and commute time
 df.plot.scatter(x='JWMNP', y='PINCP')
 
-### Scatterplot of Income and Person's Weight
+### Scatterplot of Income and Person's Weight  
 df.plot.scatter(x='PWGTP', y='PINCP')
 
 ### Scatterplot of Income and Citizenship
 df.plot.scatter(x='CIT', y='PINCP')
+plt.xlabel('Citizenship')
+plt.ylabel('Income')
 ### Boxplot of Income and Citizenship
 df.boxplot(column='PINCP', by='CIT')
 ### ViolinPlot of Income and Citizenship
@@ -51,6 +54,7 @@ df.groupby('ENG').PINCP.sum().plot.bar()
 
 ### Boxplot of Income by Ability to speak English
 df.boxplot(column=['PINCP'], by='ENG')
-
+plt.xlabel('Rating of ability to speak English')
+plt.ylabel('Income')
 
 

@@ -11,6 +11,7 @@ df.PINCP.plot.box(figsize=(10,12))
 ### Boxplot: income (capped at $150,000) (TODO: come up with a better barplot - this is inaccurate)
 df_small_income.PINCP.plot.box(figsize=(10,12))
 
+
 ### Histogram: income
 plt.xlabel('Income')
 df.PINCP.plot.hist(bins=100)
@@ -18,12 +19,21 @@ df.PINCP.plot.hist(bins=100)
 df.PINCP.hist(log=True, bins=100)
 ### Histogram: income - cap at $150K
 df_small_income.PINCP.hist(bins=100)
+### Histogram: income - cap at $20K
+df[df.PINCP < 20000].PINCP.hist(bins=50)
 
 ### Histogram of person's age
 df.AGEP.hist(bins=40)
 
 ### Histogram of income-poverty-ration
 df.POVPIP.hist(bins=50)
+
+### Histogram of commute time
+df.JWMNP.hist(bins=len(df.JWMNP.unique()))
+
+### Find weird, large groupings of commute time
+df.JWMNP[df.JWMNP.notnull()].astype('int64').value_counts().sort_values().tail().plot(kind='bar')
+
 
 ### StackedBarplot of income response (19% response)
 response = pd.crosstab([df.dummy], df.FPINCP.astype(bool))
@@ -127,4 +137,6 @@ df[df.FPINCP == 0].PINCP.head()
 ### Count number of non-null observations for each feature
 ### ALL non-null except: POVPIP: 96% && JWMNP 54%
 df[important_features].info()
+
+
 

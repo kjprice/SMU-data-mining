@@ -7,9 +7,6 @@ print('%d rows after removing children' % (len(df)))
 ### This seems to be necessary to make stacked barplots on one feature
 df.dummy = True
 
-# Take rows where income is less than $150,000
-df_small_income = df[df.PINCP < 150000]
-
 
 ### Define important features
 important_continuous_features = [
@@ -309,5 +306,8 @@ insurance_features = [
     'PUBCOV', # Public health coverage recode
 ]
 
+
+# Take rows where income is less than $150,000
+df_small_income = df[df.PINCP < 150000]
 
 

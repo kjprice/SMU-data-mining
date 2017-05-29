@@ -7,9 +7,6 @@ print('%d rows after removing children' % (len(df)))
 ### This seems to be necessary to make stacked barplots on one feature
 df.dummy = True
 
-# Take rows where income is less than $150,000
-df_small_income = df[df.PINCP < 150000]
-
 
 ### Define important features
 important_continuous_features = [
@@ -79,6 +76,7 @@ df.JWTR = df.JWTR \
     .replace('12.0', 'Other method') \
     .replace('nan', 'Non-Commuter (unemployed, child, military)')
 
+df['PUMA'] = df.PUMA.astype('category')
 df['ST'] = df.ST.astype('category').astype('str')
 df.ST = df.ST \
     .replace('1', 'AL') \
@@ -196,7 +194,7 @@ occupation_features = [
     'SCH', # School enrollment
     'SFN', # Subfamily number
     'WKL', # When last worked
-    'SCIENGP', # Field of Degree Science and Engineering Flag – NSF Definition
+    'SCIENGP', # Field of Degree Science and Engineering Flag - NSF Definition
     'WRK', # Worked last week
     'COW', # Class of worker
     'NWLA', # On layoff from work
@@ -260,7 +258,7 @@ relationship_features = [
 education_features = [
     'SCHL', # Educational attainment
     'SCHG', # Grade level attending
-    'SCIENGRLP', # Field of Degree Science and Engineering Related Flag – NSF Definition
+    'SCIENGRLP', # Field of Degree Science and Engineering Related Flag - NSF Definition
 ]
 
 military_features = [
@@ -308,5 +306,8 @@ insurance_features = [
     'PUBCOV', # Public health coverage recode
 ]
 
+
+# Take rows where income is less than $150,000
+df_small_income = df[df.PINCP < 150000]
 
 

@@ -77,7 +77,6 @@ plt.xlabel('Rating of ability to speak English')
 plt.ylabel('Income')
 
 
-
 ### Multi-faceted plotting.  commute transportation with time for commuting and total income (Need to create legend)
 sns.set(style="ticks")
 
@@ -135,6 +134,7 @@ df[df.FPINCP == 0].PINCP.head()
 ### Count number of non-null observations for each feature
 ### ALL non-null except: POVPIP: 96% && JWMNP 54%
 df[important_features].info()
+
 
 
 

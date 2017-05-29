@@ -62,8 +62,8 @@ plt.ylabel('Income')
 ### Boxplot of Income and Citizenship
 df.boxplot(column='PINCP', by='CIT')
 ### ViolinPlot of Income and Citizenship
-sns.violinplot(x="CIT_CAT", y="PINCP", data=df) 
-sns.violinplot(x="CIT_CAT", y="PINCP", data=df_small_income)
+sns.violinplot(x="CIT", y="PINCP", data=df) 
+sns.violinplot(x="CIT", y="PINCP", data=df_small_income)
 
 ### Scatterplot: Person has child?
 df.plot.scatter(x='OC', y='PINCP')
@@ -72,10 +72,10 @@ df.plot.scatter(x='OC', y='PINCP')
 df.plot.scatter(x='AGEP', y='PINCP')
 
 ### Barplot of Income and Ability to speak English (1=Great, 4=Terrible) - No real information - lok at boxplot instead
-df.groupby('ENG_CAT').PINCP.sum().plot.bar()
+df.groupby('ENG').PINCP.sum().plot.bar()
 
 ### Violin plot of English versus income
-sns.violinplot(x="ENG_CAT", y="logPINCP", data=df) 
+sns.violinplot(x="ENG", y="logPINCP", data=df) 
 df.plot.scatter(x='ENG', y='logPINCP')
 
 ### Boxplot of Income by Ability to speak English

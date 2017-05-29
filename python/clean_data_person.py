@@ -8,7 +8,7 @@ print('%d rows after removing children' % (len(df)))
 df.dummy = True
 
 
-df.logPINCP = df.PINCP.copy(deep=True)
+df['logPINCP'] = df.PINCP.copy(deep=True)
 df.logPINCP[df.logPINCP <= 0] = 1
 df.logPINCP = np.log(df.logPINCP)
 
@@ -21,31 +21,31 @@ important_continuous_features = [
     'PWGTP',    # Person's weight (continuous)
     'PAP',      # Public assistance income in past 12 months
 ]
-import_categorical_features = [
-    'CIT_CAT',  # Citizenship status (categorical - string)
-    'OC_CAT',   # Own child (Boolean)
-    'ENG_CAT',  # Ability to speak English (ordinal 1-4)
+importegorical_features = [
+    'CIT',  # Citizenship status (categorical - string)
+    'OC',   # Own child (Boolean)
+    'ENG',  # Ability to speak English (ordinal 1-4)
     'COW',      # Class of worker (categorical - string)
     'PUMA',     # Public use microdata area code (PUMA) based on 2010 Census definition
     'SEX',      # Gender
 ]
-important_features = important_continuous_features + import_categorical_features;
+important_features = important_continuous_features + importegorical_features;
 
 
 # Clean important features
 ### Change from numeric to categorical (ordinal)
-df['CIT_CAT'] = df.CIT.astype('category').astype('str')
-df.CIT_CAT = df.CIT_CAT \
+df['CIT'] = df.CIT.astype('category').astype('str')
+df.CIT = df.CIT \
     .replace('1', 'US Born') \
     .replace('2', 'US Territory Born') \
     .replace('3', 'Born Abroad)') \
     .replace('4', 'Naturalized') \
     .replace('5', 'Non-Citizen')
 
-df['OC_CAT'] = df.OC.astype('category').astype(bool)
+df['OC'] = df.OC.astype('category').astype(bool)
 
-df['ENG_CAT'] = df.ENG.astype('category').astype('str')
-df.ENG_CAT = df.ENG_CAT \
+df['ENG'] = df.ENG.astype('category').astype('str')
+df.ENG = df.ENG \
     .replace('nan', 'Speaks only English') \
     .replace('1.0', 'Very well') \
     .replace('2.0', 'Well') \

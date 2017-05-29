@@ -75,6 +75,9 @@ df.plot.scatter(x='AGEP', y='PINCP')
 df.groupby('ENG').PINCP.sum().plot.bar()
 
 ### Violin plot of English versus income
+df['logPINCP'] = df.PINCP.copy(deep=True)
+df['logPINCP'][df.logPINCP <= 0] = 1
+df.logPINCP = np.log(df.logPINCP)
 sns.violinplot(x="ENG", y="logPINCP", data=df) 
 df.plot.scatter(x='ENG', y='logPINCP')
 

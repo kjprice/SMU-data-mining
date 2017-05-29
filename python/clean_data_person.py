@@ -7,11 +7,6 @@ print('%d rows after removing children' % (len(df)))
 ### This seems to be necessary to make stacked barplots on one feature
 df.dummy = True
 
-
-df['logPINCP'] = df.PINCP.copy(deep=True)
-df.logPINCP[df.logPINCP <= 0] = 1
-df.logPINCP = np.log(df.logPINCP)
-
 ### Define important features
 important_continuous_features = [
     'PINCP',    # Total person's income (signed)

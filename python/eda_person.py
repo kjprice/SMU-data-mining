@@ -38,10 +38,13 @@ df.JWMNP[df.JWMNP.notnull()].astype('int64').value_counts().sort_values().tail()
 ### StackedBarplot of income response (19% response)
 response = pd.crosstab([df.dummy], df.FPINCP.astype(bool))
 response.div(response.sum(1).astype(float), axis=0).plot(kind='bar', stacked=True)
+
+
+
 # Bivariate Plots
 
-### Scatterplot of all dollar features (TODO: get down to maybe 4 or less)
-scatter_matrix(df[important_continuous_features], figsize=(12,10))
+### Scatterplot of all dollar features
+scatter_matrix(df[important_continuous_features])
 
 ### Scatterplot of Income and commute time
 df.plot.scatter(x='JWMNP', y='PINCP')
@@ -59,8 +62,8 @@ plt.ylabel('Income')
 ### Boxplot of Income and Citizenship
 df.boxplot(column='PINCP', by='CIT')
 ### ViolinPlot of Income and Citizenship
-sns.violinplot(x="CIT_CAT", y="PINCP", data=df) 
-sns.violinplot(x="CIT", y="PINCP", data=df_small_income) # TODO: Add Legend
+sns.violinplot(x="CIT", y="PINCP", data=df) 
+sns.violinplot(x="CIT", y="PINCP", data=df_small_income)
 
 ### Scatterplot: Person has child?
 df.plot.scatter(x='OC', y='PINCP')
@@ -71,9 +74,24 @@ df.plot.scatter(x='AGEP', y='PINCP')
 ### Barplot of Income and Ability to speak English (1=Great, 4=Terrible) - No real information - lok at boxplot instead
 df.groupby('ENG').PINCP.sum().plot.bar()
 
+### Violin plot of English versus income
+df['logPINCP'] = df.PINCP.copy(deep=True)
+df['logPINCP'][df.logPINCP <= 0] = 1
+df.logPINCP = np.log(df.logPINCP)
+sns.violinplot(x="ENG", y="logPINCP", data=df) 
+df.plot.scatter(x='ENG', y='logPINCP')
+
 ### Boxplot of Income by Ability to speak English
 df.boxplot(column=['PINCP'], by='ENG')
 plt.xlabel('Rating of ability to speak English')
+plt.ylabel('Income')
+
+### Boxplot of Income and Sex
+sns.boxplot('SEX', 'PINCP', data=df)
+sns.boxplot('SEX', 'logPINCP', data=df)
+
+df.boxplot(column='PINCP', by='SEX')
+plt.xlabel('Gender')
 plt.ylabel('Income')
 
 

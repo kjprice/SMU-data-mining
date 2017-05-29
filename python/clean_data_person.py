@@ -26,7 +26,8 @@ import_categorical_features = [
     'OC_CAT',   # Own child (Boolean)
     'ENG_CAT',  # Ability to speak English (ordinal 1-4)
     'COW',      # Class of worker (categorical - string)
-    'PUMA',     # # Public use microdata area code (PUMA) based on 2010 Census definition
+    'PUMA',     # Public use microdata area code (PUMA) based on 2010 Census definition
+    'SEX',      # Gender
 ]
 important_features = important_continuous_features + import_categorical_features;
 

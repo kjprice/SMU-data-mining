@@ -16,7 +16,7 @@ from matplotlib.patches import Polygon, PathPatch
 from matplotlib.collections import PatchCollection
 from mpl_toolkits.basemap import Basemap
 
-os.chdir('/Users/kjprice/Library/Projects/smu/data-mining/project')
+execfile('python/clean_data_person.py')
 
 fig = plt.figure(figsize=(20,10))
 ax = fig.add_subplot(111, axisbg='w', frame_on=False)
@@ -87,9 +87,24 @@ state_codes = {
 }       
 
 # define a colorramp
-num_colors = 12
+num_colors = 15
 cm = plt.get_cmap('Blues')
 blues = [cm(1.*i/num_colors) for i in range(num_colors)]
+
+
+
+# All the income stuff
+df['logPINCP'] = np.log(df.PINCP+(-1*df.PINCP.min())+1)
+df['PCNIProlog'] = df['logPINCP'].fillna(0).astype(np.int64)
+
+
+#grab PUMA
+puma = df.groupby(['PUMA'])
+
+puma_means = puma.PCNIProlog.mean()
+puma_clean = puma_means.subtract(puma_means.min())
+puma_means_range = puma_clean.div(puma_clean.max())
+puma_color_index = puma_means_range.multiply(1.4).multiply(10).astype('int64')
 
 # add colorbar legend
 cmap = mpl.colors.ListedColormap(blues)
@@ -105,7 +120,13 @@ for key in state_codes.keys():
     for info, shape in zip(m.state_info, m.state):
         patches = [Polygon(np.array(shape), True)]
         pc = PatchCollection(patches, edgecolor='k', linewidths=1., zorder=2)
-        pc.set_color(random.choice(blues))
+        try:
+            color_index = puma_color_index[int(info['PUMACE10'])]
+            color = blues[color_index]
+        except IndexError:
+            # print 'not found %d' % int(info['PUMACE10'])
+            color = blues[0]
+        pc.set_color(color)
         ax.add_collection(pc)
 
 # create a second axes for the colorbar
@@ -114,4 +135,4 @@ cb = mpl.colorbar.ColorbarBase(ax2, cmap=cmap, ticks=bounds, boundaries=bounds,
                                format='%1i')
 cb.ax.set_yticklabels([str(round(i, 2)) for i in bounds])
 
-plt.savefig('data/map.png')
+# plt.savefig('data/map.png')

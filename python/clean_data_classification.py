@@ -38,13 +38,3 @@ del lr['COW']
 print ('After cleaning "lr" dataset:')
 print (lr.info())
 
-
-y = lr.wealthy.values
-X = lr.values
-
-
-### Create a testing/training set on  80% of the data, split the dataset 3 times
-num_cv_iterations = 3
-cv_object = ShuffleSplit(n_splits=num_cv_iterations, test_size=.2)
-print ('created new dataset for testing/training classifications called "cv_object')
-

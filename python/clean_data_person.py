@@ -4,6 +4,9 @@ print ('%d rows before removing children' % (len(df)))
 df = df[df.AGEP > 18]
 print('%d rows after removing children' % (len(df)))
 
+# Create a new categorical variable to seperate people who make more (or less) than 100K
+df['affluency'] = pd.cut(df.PINCP, [-1, 99999.99, 1e12], labels=('general', 'rich'))
+
 ### This seems to be necessary to make stacked barplots on one feature
 df.dummy = True
 

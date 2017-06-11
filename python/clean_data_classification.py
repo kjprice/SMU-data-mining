@@ -1,5 +1,7 @@
 from sklearn.model_selection import ShuffleSplit
 
+execfile('python/clean_data_person.py')
+
 # Create testing/training dataset - based on:
 # - https://github.com/eclarson/DataMiningNotebooks/blob/master/04.%20Logits%20and%20SVM.ipynb
 ### create a new, linear regression, dataset

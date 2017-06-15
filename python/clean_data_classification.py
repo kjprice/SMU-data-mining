@@ -1,5 +1,7 @@
 from sklearn.model_selection import ShuffleSplit
 
+execfile('python/os.py')
+execfile('python/load_data_person.py')
 execfile('python/clean_data_person.py')
 
 # based on: https://github.com/eclarson/DataMiningNotebooks/blob/master/04.%20Logits%20and%20SVM.ipynb

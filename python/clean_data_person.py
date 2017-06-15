@@ -21,7 +21,6 @@ importegorical_features = [
     'COW',      # Class of worker (categorical - string)
     'PUMA',     # Public use microdata area code (PUMA) based on 2010 Census definition
     'SEX',      # Gender
-    'affluency' # 2 groups of people based on income
 ]
 important_features = important_continuous_features + importegorical_features;
 

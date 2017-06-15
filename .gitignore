@@ -2,3 +2,4 @@ data/*
 .ipynb_checkpoints
 .Rhistory
 python_notebooks/map.ipynb
+python/os.py

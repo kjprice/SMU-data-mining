@@ -13,6 +13,12 @@ del lr2['wealthy']
 
 X = lr2.values
 
+### Standardize X values
+scl_obj = StandardScaler()
+scl_obj.fit(X)
+
+X = scl_obj.transform(X)
+
 ### Create a testing/training set on  80% of the data, split the dataset 3 times
 num_cv_iterations = 3
 cv_object = ShuffleSplit(n_splits=num_cv_iterations, test_size=.2)
@@ -20,7 +26,7 @@ print ('created new dataset for testing/training classifications called "cv_obje
 
 
 ### Create reusable logistic regression object
-lr_clf = LogisticRegression(penalty='l2', C=1.0, class_weight=None)
+lr_clf = LogisticRegression(penalty='l2', C=0.5, class_weight=None)
 
 ### Create and test accuracy of our model
 accuracies = cross_val_score(lr_clf, X, y=y, cv=cv_object) # this also can help with parallelism

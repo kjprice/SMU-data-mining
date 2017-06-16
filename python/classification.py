@@ -3,6 +3,8 @@
 #-------Logistic Regression-------#
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
+from sklearn.model_selection import cross_val_score
+
 
 ### Create reponse and explanatory variables
 lr2 = lr.copy(deep=True)
@@ -20,24 +22,10 @@ print ('created new dataset for testing/training classifications called "cv_obje
 ### Create reusable logistic regression object
 lr_clf = LogisticRegression(penalty='l2', C=1.0, class_weight=None)
 
-iter_num = 0
-
 ### Create and test accuracy of our model
-for train_indices, test_indices in cv_object.split(X,y):
-    X_train = X[train_indices]
-    y_train = y[train_indices]
-    
-    X_test = X[test_indices]
-    y_test = y[test_indices]
-    
-    lr_clf.fit(X_train, y_train)
-    y_hat = lr_clf.predict(X_test)
-    
-    acc = mt.accuracy_score(y_test, y_hat)
+accuracies = cross_val_score(lr_clf, X, y=y, cv=cv_object) # this also can help with parallelism
+print(accuracies)
 
-    print("====Iteration",iter_num," ====")
-    print('accuracy', acc)
-    iter_num += 1
 
 print('')
 #----------SVM-------------#

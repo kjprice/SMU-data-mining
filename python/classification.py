@@ -3,7 +3,8 @@
 #-------Logistic Regression-------#
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 
 ### Create reponse and explanatory variables
@@ -19,25 +20,35 @@ scl_obj.fit(X)
 
 X = scl_obj.transform(X)
 
-### Create a testing/training set on  80% of the data, split the dataset 3 times
-num_cv_iterations = 3
-cv_object = ShuffleSplit(n_splits=num_cv_iterations, test_size=.2)
-print ('created new dataset for testing/training classifications called "cv_object')
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=0)
 
 
 ### Create reusable logistic regression object
-lr_clf = LogisticRegression(penalty='l2', C=0.5, class_weight=None)
+lr_clf = LogisticRegression(penalty='l2', C=0.05, class_weight=None)
 
 ### Create and test accuracy of our model
-accuracies = cross_val_score(lr_clf, X, y=y, cv=cv_object) # this also can help with parallelism
-print(accuracies)
+lr_clf.fit(X_train, y_train)
+## TODO: use cross validation!
+y_hat = lr_clf.predict(X_test)
+
+acc = mt.accuracy_score(y_test, y_hat)
+conf = mt.confusion_matrix(y_test, y_hat)
+
+print('accuracy: %s' % acc)
+print('Our model is completely screwed up. Why are we not predicting anyone to be wealthy?')
+print(conf)
+
+
+zip_vars = zip(lr_clf.coef_.T,lr2.columns) # combine attributes
+zip_vars = sorted(zip_vars)
+for coef, name in zip_vars:
+    print(name, 'has weight of', coef[0]) # now print them out
 
 
 print('')
 #----------SVM-------------#
 from sklearn.model_selection import StratifiedShuffleSplit 
 from sklearn.linear_model import SGDClassifier
-from sklearn.preprocessing import StandardScaler
 
 cv = StratifiedShuffleSplit( n_splits=1,test_size=0.5)
 regularize_const = 0.1

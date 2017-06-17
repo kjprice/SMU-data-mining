@@ -158,35 +158,6 @@ df.MIL = df.MIL \
     .replace('3', 'Reserves') \
     .replace('4', 'Never Served')
 
-
-df['SCHL'] = df.SCHL.astype('category').astype('str')
-df.SCHL = df.SCHL \
-    .replace('bb', 'Too young') \
-    .replace('01', 'No Schooling') \
-    .replace('02', 'Elementary School') \
-    .replace('03', 'Elementary School') \
-    .replace('04', 'Elementary School') \
-    .replace('05', 'Elementary School') \
-    .replace('06', 'Elementary School') \
-    .replace('07', 'Elementary School') \
-    .replace('08', 'Elementary School') \
-    .replace('09', 'Elementary School') \
-    .replace('10', 'Junior High School') \
-    .replace('11', 'Junior High School') \
-    .replace('12', 'Some High School') \
-    .replace('13', 'Some High School') \
-    .replace('14', 'Some High School') \
-    .replace('15', 'Some High School') \
-    .replace('16', 'High School Diploma or GED') \
-    .replace('17', 'High School Diploma or GED') \
-    .replace('18', 'Some College') \
-    .replace('19', 'Some College') \
-    .replace('20', 'Associates Degree') \
-    .replace('21', 'Bachelors Degree') \
-    .replace('22', 'Masters Degree') \
-    .replace('23', 'Professional Degree') \
-    .replace('24', 'Doctorate Degree') 
-    
 dollar_features = [
     'PINCP', # Total person's income (signed)
     'PERNP', # Total person's earnings
@@ -344,6 +315,8 @@ insurance_features = [
 
 # Take rows where income is less than $150,000
 df_small_income = df[df.PINCP < 150000]
+
+
 
 
 

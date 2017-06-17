@@ -37,12 +37,13 @@ acc = mt.accuracy_score(y_test, y_hat)
 conf = mt.confusion_matrix(y_test, y_hat)
 
 print('accuracy: %s' % acc)
-print('Our model is completely screwed up. Why are we not predicting anyone to be wealthy?')
 print(conf)
 
 
 zip_vars = zip(lr_clf.coef_.T,lr2.columns) # combine attributes
 zip_vars = sorted(zip_vars)
+
+print('\nWeights of variables')
 for coef, name in zip_vars:
     print(name, 'has weight of', coef[0]) # now print them out
 

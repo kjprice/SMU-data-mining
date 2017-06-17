@@ -70,3 +70,9 @@ for train_idx, test_idx in cv.split(X,y):
 
 print('SVM:', acc)
 
+
+
+
+
+
+

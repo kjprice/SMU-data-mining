@@ -23,6 +23,7 @@ importegorical_features = [
     'SEX',      # Gender
     'MIL',      # Military Service
     'SCHL',     # Level of Education Attained
+    'MAR'       # Marital Status
 ]
 important_features = important_continuous_features + importegorical_features;
 
@@ -315,6 +316,11 @@ insurance_features = [
 
 # Take rows where income is less than $150,000
 df_small_income = df[df.PINCP < 150000]
+
+
+
+
+
 
 
 

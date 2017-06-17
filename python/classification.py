@@ -56,21 +56,22 @@ print('')
 #----------SVM-------------#
 
 ### Using Batch Gradient Descent, we get accuracy of 67% (compared to 57% using SGD), but it takes 2 minutes to calculate
-# from datetime import datetime
-# startTime = datetime.now()
+from sklearn.svm import SVC
 
-# from sklearn.svm import SVC
-
-# svm_clf = SVC(C=0.5, class_weight='balanced')
-# svm_clf.fit(X_train, y_train)
-
-# y_hat = svm_clf.predict(X_test)
-
-# conf = mt.confusion_matrix(y_test, y_hat)
-# acc = mt.accuracy_score(y_test,y_hat)
-
-# print('SVM:', acc)
-# print (datetime.now() - startTime)
+def bgd():
+   from datetime import datetime
+   startTime = datetime.now()
+   
+   svm_clf = SVC(C=0.5, class_weight='balanced')
+   svm_clf.fit(X_train, y_train)
+   
+   y_hat = svm_clf.predict(X_test)
+   
+   conf = mt.confusion_matrix(y_test, y_hat)
+   acc = mt.accuracy_score(y_test,y_hat)
+   
+   print('SVM:', acc)
+   print (datetime.now() - startTime)
 
 ### Using SGD
 from sklearn.model_selection import StratifiedShuffleSplit 

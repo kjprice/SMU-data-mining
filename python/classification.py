@@ -42,6 +42,8 @@ def run_logistic_regression():
 
 run_logistic_regression()
 
+
+### Get weights
 def get_weights():
    zip_vars = zip(lr_clf.coef_.T, lr2.columns) # combine attributes
    zip_vars = sorted(zip_vars)
@@ -78,20 +80,17 @@ from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.linear_model import SGDClassifier
 
 def sgd():
-   cv = StratifiedShuffleSplit( n_splits=1,test_size=0.5)
    regularize_const = 0.1
    iterations = 5
    svm_sgd = SGDClassifier(alpha=regularize_const, class_weight='balanced',
            fit_intercept=True, l1_ratio=0.0, learning_rate='optimal',
            loss='hinge', n_iter=iterations, n_jobs=-1, penalty='l2')
    
-   scl = StandardScaler()
-   for train_idx, test_idx in cv.split(X,y):
-       svm_sgd.fit(scl.fit_transform(X[train_idx]),y[train_idx])
-       yhat = svm_sgd.predict(scl.transform(X[test_idx]))
-       
-       conf = mt.confusion_matrix(y[test_idx],yhat)
-       acc = mt.accuracy_score(y[test_idx],yhat)
+   svm_sgd.fit(scl.fit_transform(X_train), y_train)
+   yhat = svm_sgd.predict(scl.transform(X_test))
+   
+   conf = mt.confusion_matrix(y_test, yhat)
+   acc = mt.accuracy_score(y_test, yhat)
    
    print('SVM:', acc)
 

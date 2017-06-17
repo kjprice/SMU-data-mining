@@ -16,7 +16,6 @@ important_continuous_features = [
 ]
 importegorical_features = [
     'CIT',  # Citizenship status (categorical - string)
-    'OC',   # Own child (Boolean)
     'ENG',  # Ability to speak English (ordinal 1-4)
     'COW',      # Class of worker (categorical - string)
     'PUMA',     # Public use microdata area code (PUMA) based on 2010 Census definition

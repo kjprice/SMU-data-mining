@@ -154,10 +154,10 @@ df.SEX = df.SEX \
 
 df['MIL'] = df.MIL.astype('category').astype('str')
 df.MIL = df.MIL \
-    .replace('1', 'Serving Active Duty') \
-    .replace('2', 'Served Not Active') \
-    .replace('3', 'Reserves') \
-    .replace('4', 'Never Served')
+    .replace('1.0', 'Serving Active Duty') \
+    .replace('2.0', 'Served Not Active') \
+    .replace('3.0', 'Reserves') \
+    .replace('4.0', 'Never Served')
 
 dollar_features = [
     'PINCP', # Total person's income (signed)

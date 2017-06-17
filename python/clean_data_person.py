@@ -22,6 +22,7 @@ importegorical_features = [
     'PUMA',     # Public use microdata area code (PUMA) based on 2010 Census definition
     'SEX',      # Gender
     'MIL',      # Military Service
+    'SCHL',     # Level of Education Attained
 ]
 important_features = important_continuous_features + importegorical_features;
 

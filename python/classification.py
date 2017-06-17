@@ -14,6 +14,8 @@ del lr2['wealthy']
 
 X = lr2.values
 
+# y = lr.wealthy.values
+# X = lr[['is_male']]
 ### Standardize X values
 scl_obj = StandardScaler()
 scl_obj.fit(X)
@@ -24,7 +26,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_s
 
 
 ### Create reusable logistic regression object
-lr_clf = LogisticRegression(penalty='l2', C=0.05, class_weight=None)
+lr_clf = LogisticRegression(penalty='l2', C=0.05, class_weight='balanced')
 
 ### Create and test accuracy of our model
 lr_clf.fit(X_train, y_train)
@@ -53,7 +55,7 @@ from sklearn.linear_model import SGDClassifier
 cv = StratifiedShuffleSplit( n_splits=1,test_size=0.5)
 regularize_const = 0.1
 iterations = 5
-svm_sgd = SGDClassifier(alpha=regularize_const,
+svm_sgd = SGDClassifier(alpha=regularize_const, class_weight='balanced',
         fit_intercept=True, l1_ratio=0.0, learning_rate='optimal',
         loss='hinge', n_iter=iterations, n_jobs=-1, penalty='l2')
 

@@ -157,8 +157,20 @@ for v in vars_to_plot:
 
 
 
+#### Create jointplot
+import numpy as np 
+import pandas as pd
+import seaborn as sns
 
+#array of the support vectors from the SVM
+SVM_support_vectors = svm_clf.support_vectors_
+print(SVM_support_vectors)
 
+####NEEDS WORK.   NEED 2 CONTINUOUS VARIABLES.  ABLE TO GET THE SUPPORT VECTORS, BUT THE AGE IS NOT IN SAME DATASET
+np.random.seed(0)
+sns.set(style="white", color_codes=True)
+tips = sns.load_dataset("tips")
+g = sns.jointplot(x="AGEP", y="SVM_support_vectors", data=svm_clf)
 
 
 

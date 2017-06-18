@@ -79,22 +79,22 @@ def bgd():
 from sklearn.model_selection import StratifiedShuffleSplit 
 from sklearn.linear_model import SGDClassifier
 
-def sgd():
+def run_sgd():
    regularize_const = 0.1
    iterations = 5
    svm_sgd = SGDClassifier(alpha=regularize_const, class_weight='balanced',
            fit_intercept=True, l1_ratio=0.0, learning_rate='optimal',
            loss='hinge', n_iter=iterations, n_jobs=-1, penalty='l2')
    
-   svm_sgd.fit(scl.fit_transform(X_train), y_train)
-   yhat = svm_sgd.predict(scl.transform(X_test))
+   svm_sgd.fit(X_train, y_train)
+   y_hat = svm_sgd.predict(X_test)
    
-   conf = mt.confusion_matrix(y_test, yhat)
-   acc = mt.accuracy_score(y_test, yhat)
+   acc = mt.accuracy_score(y_test, y_hat)
+   conf = mt.confusion_matrix(y_test, y_hat)
    
-   print('SVM:', acc)
+   print('accuracy: %s \n' % acc)
 
-sgd()
+run_sgd()
 
 
 ####Create series of the weights and map

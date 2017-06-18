@@ -57,7 +57,7 @@ get_weights()
 print('')
 #----------SVM-------------#
 
-### Using Batch Gradient Descent, we get accuracy of 67% (compared to 57% using SGD), but it takes 2 minutes to calculate
+### Using Batch Gradient Descent, we get accuracy of 78.2% (compared to 77.2% using SGD), but it takes 3 minutes to calculate
 from sklearn.svm import SVC
 
 def bgd():
@@ -74,6 +74,8 @@ def bgd():
    
    print('SVM:', acc)
    print (datetime.now() - startTime)
+
+#bgd()
 
 ### Using SGD
 from sklearn.model_selection import StratifiedShuffleSplit 
@@ -97,6 +99,8 @@ def run_sgd():
 run_sgd()
 
 
+
+
 ####Create series of the weights and map
 from matplotlib import pyplot as plt
 %matplotlib inline
@@ -106,6 +110,8 @@ weights = pd.Series(lr_clf.coef_[0],index=lr2.columns)
 print weights
 weights.plot(kind='bar')
 plt.show()
+
+
 
 
 

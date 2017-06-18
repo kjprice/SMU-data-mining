@@ -97,6 +97,16 @@ def sgd():
 sgd()
 
 
+####Create series of the weights and map
+from matplotlib import pyplot as plt
+%matplotlib inline
+plt.style.use('ggplot')
+
+weights = pd.Series(lr_clf.coef_[0],index=lr2.columns)
+print weights
+weights.plot(kind='bar')
+plt.show()
+
 
 
 

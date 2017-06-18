@@ -112,6 +112,51 @@ weights.plot(kind='bar')
 plt.show()
 
 
+##Re-creating the training set with Wealthy
+lr2 = lr.copy(deep=True)
+y = lr2.wealthy.values
+X = lr2.values
+
+
+# Analysis of Support Vectors
+
+# make a dataframe of the training data
+# df_tested_on = pd.DataFrame(X_train) # saved from above, the indices chosen for training
+df_tested_on = lr2
+# now get the support vectors from the trained model
+df_support = df_tested_on.iloc[svm_clf.support_,:]
+
+df_support.loc[:,'wealthy'] = y[svm_clf.support_] # add back in the 'Survived' Column to the pandas dataframe
+lr2.loc[:,'wealthy'] = y # also add it back in for the original data
+df_support.info()
+
+
+# now lets see the statistics of these attributes
+from pandas.tools.plotting import boxplot
+
+# group the original data and the support vectors
+df_grouped_support = df_support.groupby(['wealthy'])
+df_grouped = lr2.groupby(['wealthy'])
+
+# plot KDE of Different variables
+vars_to_plot = ['AGEP']
+
+for v in vars_to_plot:
+    plt.figure(figsize=(10,4))
+    # plot support vector stats
+    plt.subplot(1,2,1)
+    ax = df_grouped_support[v].plot.kde() 
+    plt.legend(['not_wealthy','wealthy'])
+    plt.title(v+' (Instances chosen as Support Vectors)')
+    
+    # plot original distributions
+    plt.subplot(1,2,2)
+    ax = df_grouped[v].plot.kde() 
+    plt.legend(['not_wealthy','wealthy'])
+    plt.title(v+' (Original)')
+
+
+
 
 
 

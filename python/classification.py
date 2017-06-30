@@ -42,9 +42,9 @@ X_train, X_test, y_train, y_test = clean_data_for_analysis()
 
 
 #-------Bayes-------#
-def run_multinomial_bayes():
+def run_multinomial_bayes(alpha):
     # TODO: tweak alpha
-    mb_clf = MultinomialNB(alpha=.1)
+    mb_clf = MultinomialNB(alpha=alpha)
     
     mb_clf.fit(X_train, y_train)
     y_hat = mb_clf.predict(X_test)
@@ -52,9 +52,11 @@ def run_multinomial_bayes():
     acc = mt.accuracy_score(y_test, y_hat)
     # print(mt.confusion_matrix(y_test, y_hat))
     
-    print_accuracy('bayes', acc)
+    print_accuracy('bayes multinomial %s'%(alpha), acc)
 
-run_multinomial_bayes()
+run_multinomial_bayes(100)
+run_multinomial_bayes(1)
+run_multinomial_bayes(.01)
 
 
 

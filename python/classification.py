@@ -18,7 +18,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.naive_bayes import MultinomialNB
 
-
+def print_accuracy(algorithm, accuracy):
+    accuracy = round(accuracy*100, 2)
+    print('accuracy %s%% %s' % (accuracy, algorithm))
+    
 def clean_data_for_analysis():
    global lr2
    ### Create reponse and explanatory variables
@@ -46,15 +49,13 @@ def run_multinomial_bayes():
     mb_clf.fit(X_train, y_train)
     y_hat = mb_clf.predict(X_test)
     
-    acc = mt.accuracy_score(y_hat, y_test)
+    acc = mt.accuracy_score(y_test, y_hat)
+    # print(mt.confusion_matrix(y_test, y_hat))
     
-    print('accuracy bayes: %s' % acc)
+    print_accuracy('bayes', acc)
 
 run_multinomial_bayes()
 
-    
-
-X_train, X_test, y_train, y_test = clean_data_for_analysis()
 
 
 #-------Logistic Regression-------#
@@ -71,8 +72,8 @@ def run_logistic_regression():
    acc = mt.accuracy_score(y_test, y_hat)
    conf = mt.confusion_matrix(y_test, y_hat)
    
-   print('accuracy logistic regression: %s' % acc)
-   print(conf)
+   print_accuracy('logistic regression', acc)
+   # print(conf)
 
 run_logistic_regression()
 
@@ -130,7 +131,7 @@ def run_sgd():
    acc = mt.accuracy_score(y_test, y_hat)
    conf = mt.confusion_matrix(y_test, y_hat)
    
-   print('accuracy gradient descent: %s \n' % acc)
+   print_accuracy('gradient descent', acc)
 
 run_sgd()
 

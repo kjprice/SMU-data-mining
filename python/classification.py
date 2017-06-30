@@ -199,15 +199,17 @@ run_sgd()
 
 #----------KNN-------------#
 def run_knn():
-   knn_clf = KNeighborsClassifier()
-   knn_clf.fit(X_train, y_train)
-   
-   y_hat = knn_clf.predict(X_test)
-   
-   conf = mt.confusion_matrix(y_test, y_hat)
-   acc = mt.accuracy_score(y_test,y_hat)
-   
-   print_accuracy('KNN', acc)
+    ## seems to default to kd_tree
+    ## TODO: see if parameters can be used to tweak
+    knn_clf = KNeighborsClassifier()
+    knn_clf.fit(X_train, y_train)
+    
+    y_hat = knn_clf.predict(X_test)
+    
+    conf = mt.confusion_matrix(y_test, y_hat)
+    acc = mt.accuracy_score(y_test,y_hat)
+    
+    print_accuracy('KNN', acc)
 
 run_knn()
 

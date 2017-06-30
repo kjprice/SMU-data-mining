@@ -8,12 +8,16 @@
 # SVM
 # GD
 
-#-------Logistic Regression-------#
+import numpy as np 
+import pandas as pd
+import seaborn as sns
+
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+#-------Logistic Regression-------#
 def clean_data_for_analysis():
    global lr2
    ### Create reponse and explanatory variables
@@ -60,9 +64,9 @@ def get_weights():
    for coef, name in zip_vars:
        print(name, 'has weight of', coef[0]) # now print them out
 
-get_weights()
+   print('')
 
-print('')
+# get_weights()
 #----------SVM-------------#
 
 ### Using Batch Gradient Descent, we get accuracy of 78.2% (compared to 77.2% using SGD), but it takes 3 minutes to calculate
@@ -112,21 +116,21 @@ run_sgd()
 
 
 ####Create series of the weights and map
-from matplotlib import pyplot as plt
-%matplotlib inline
-plt.style.use('ggplot')
-
-weights = pd.Series(lr_clf.coef_[0],index=lr2.columns)
-print weights
-weights.plot(kind='bar')
-plt.show()
-
-
+def plot_series_of_weights():
+   from matplotlib import pyplot as plt
+   %matplotlib inline
+   plt.style.use('ggplot')
+   
+   weights = pd.Series(lr_clf.coef_[0],index=lr2.columns)
+   # print weights
+   weights.plot(kind='bar')
+   plt.show()
+#plot_series_of_weights()
+   
 ##Re-creating the training set with Wealthy
 lr2 = lr.copy(deep=True)
 y = lr2.wealthy.values
 X = lr2.values
-
 
 # Analysis of Support Vectors
 
@@ -165,15 +169,15 @@ def explain_SV(svm_clf):
        ax = df_grouped[v].plot.kde() 
        plt.legend(['not_wealthy','wealthy'])
        plt.title(v+' (Original)')
+   
+   # create_join_plot(svm_clf)
 
+def create_join_plot(svm_clf):
    #### Create jointplot
-   import numpy as np 
-   import pandas as pd
-   import seaborn as sns
    
    #array of the support vectors from the SVM
    SVM_support_vectors = svm_clf.support_vectors_
-   print(SVM_support_vectors)
+   #print(SVM_support_vectors)
    
    ####NEEDS WORK.   NEED 2 CONTINUOUS VARIABLES.  ABLE TO GET THE SUPPORT VECTORS, BUT THE AGE IS NOT IN SAME DATASET
    np.random.seed(0)

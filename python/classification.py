@@ -18,6 +18,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
 
 def print_accuracy(algorithm, accuracy):
     accuracy = round(accuracy*100, 2)
@@ -196,7 +197,19 @@ def run_sgd():
 
 run_sgd()
 
+#----------KNN-------------#
+def run_knn():
+   knn_clf = KNeighborsClassifier()
+   knn_clf.fit(X_train, y_train)
+   
+   y_hat = knn_clf.predict(X_test)
+   
+   conf = mt.confusion_matrix(y_test, y_hat)
+   acc = mt.accuracy_score(y_test,y_hat)
+   
+   print_accuracy('KNN', acc)
 
+run_knn()
 
 
 ####Create series of the weights and map

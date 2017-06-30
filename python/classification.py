@@ -15,11 +15,11 @@ import seaborn as sns
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.naive_bayes import MultinomialNB
 
 
-def clean_data_for_analysis(standardize = False):
+def clean_data_for_analysis():
    global lr2
    ### Create reponse and explanatory variables
    lr2 = lr.copy(deep=True)
@@ -27,11 +27,10 @@ def clean_data_for_analysis(standardize = False):
    del lr2['wealthy']
    X = lr2.values
    
-   if standardize:
-       ### Standardize X values
-       scl_obj = StandardScaler()
-       scl_obj.fit(X)
-       X = scl_obj.transform(X)
+   ### Standardize X values
+   scl_obj = MinMaxScaler()
+   scl_obj.fit(X)
+   X = scl_obj.transform(X)
    
    ### Get training/test data
    return train_test_split(X, y, test_size=.2, random_state=0)
@@ -55,7 +54,7 @@ run_multinomial_bayes()
 
     
 
-X_train, X_test, y_train, y_test = clean_data_for_analysis(True)
+X_train, X_test, y_train, y_test = clean_data_for_analysis()
 
 
 #-------Logistic Regression-------#

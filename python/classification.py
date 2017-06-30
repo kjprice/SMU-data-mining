@@ -16,26 +16,49 @@ from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.naive_bayes import MultinomialNB
 
-#-------Logistic Regression-------#
-def clean_data_for_analysis():
+
+def clean_data_for_analysis(standardize = False):
    global lr2
    ### Create reponse and explanatory variables
    lr2 = lr.copy(deep=True)
    y = lr2.wealthy.values
    del lr2['wealthy']
    X = lr2.values
-
-   ### Standardize X values
-   scl_obj = StandardScaler()
-   scl_obj.fit(X)
-   X = scl_obj.transform(X)
+   
+   if standardize:
+       ### Standardize X values
+       scl_obj = StandardScaler()
+       scl_obj.fit(X)
+       X = scl_obj.transform(X)
    
    ### Get training/test data
    return train_test_split(X, y, test_size=.2, random_state=0)
 
 X_train, X_test, y_train, y_test = clean_data_for_analysis()
 
+
+#-------Bayes-------#
+def run_multinomial_bayes():
+    # TODO: tweak alpha
+    mb_clf = MultinomialNB(alpha=.1)
+    
+    mb_clf.fit(X_train, y_train)
+    y_hat = mb_clf.predict(X_test)
+    
+    acc = mt.accuracy_score(y_hat, y_test)
+    
+    print('accuracy bayes: %s' % acc)
+
+run_multinomial_bayes()
+
+    
+
+X_train, X_test, y_train, y_test = clean_data_for_analysis(True)
+
+
+#-------Logistic Regression-------#
 def run_logistic_regression():
    ### Create reusable logistic regression object
    global lr_clf
@@ -49,7 +72,7 @@ def run_logistic_regression():
    acc = mt.accuracy_score(y_test, y_hat)
    conf = mt.confusion_matrix(y_test, y_hat)
    
-   print('accuracy: %s' % acc)
+   print('accuracy logistic regression: %s' % acc)
    print(conf)
 
 run_logistic_regression()
@@ -108,7 +131,7 @@ def run_sgd():
    acc = mt.accuracy_score(y_test, y_hat)
    conf = mt.confusion_matrix(y_test, y_hat)
    
-   print('accuracy: %s \n' % acc)
+   print('accuracy gradient descent: %s \n' % acc)
 
 run_sgd()
 
@@ -184,6 +207,5 @@ def create_join_plot(svm_clf):
    sns.set(style="white", color_codes=True)
    tips = sns.load_dataset("tips")
    g = sns.jointplot(x="AGEP", y="SVM_support_vectors", data=svm_clf)
-
 
 

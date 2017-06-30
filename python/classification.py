@@ -211,7 +211,7 @@ def run_knn():
     
     print_accuracy('KNN', acc)
 
-run_knn()
+# run_knn()
 
 
 ####Create series of the weights and map

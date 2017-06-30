@@ -1,5 +1,13 @@
 # Based on https://github.com/eclarson/DataMiningNotebooks/blob/master/04.%20Logits%20and%20SVM.ipynb
 
+### Possible classification techniques:
+# Naive Bayes
+# KNN
+# Decision Trees
+# Logistic Regression
+# SVM
+# GD
+
 #-------Logistic Regression-------#
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt

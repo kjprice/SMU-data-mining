@@ -16,7 +16,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.naive_bayes import MultinomialNB
+import sklearn.naive_bayes import MultinomialNB, GaussianNB
 
 def print_accuracy(algorithm, accuracy):
     accuracy = round(accuracy*100, 2)
@@ -57,6 +57,20 @@ def run_multinomial_bayes(alpha):
 run_multinomial_bayes(100)
 run_multinomial_bayes(1)
 run_multinomial_bayes(.01)
+
+def run_gaussian_bayes():
+    # TODO: tweak alpha
+    mb_clf = GaussianNB()
+    
+    mb_clf.fit(X_train, y_train)
+    y_hat = mb_clf.predict(X_test)
+    
+    acc = mt.accuracy_score(y_test, y_hat)
+    # print(mt.confusion_matrix(y_test, y_hat))
+    
+    print_accuracy('bayes gaussian', acc)
+
+run_gaussian_bayes()
 
 
 

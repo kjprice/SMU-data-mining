@@ -17,6 +17,7 @@ from sklearn import metrics as mt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
+from sklearn.tree import DecisionTreeClassifier
 
 def print_accuracy(algorithm, accuracy):
     accuracy = round(accuracy*100, 2)
@@ -40,6 +41,24 @@ def clean_data_for_analysis():
 
 X_train, X_test, y_train, y_test = clean_data_for_analysis()
 
+#-------Decision Tree-------#
+def run_decision_tree(max_features):
+    # TODO: tweak alpha
+    dt_clf = DecisionTreeClassifier(max_features=max_features, class_weight='balanced')
+    
+    dt_clf.fit(X_train, y_train)
+    y_hat = dt_clf.predict(X_test)
+    
+    acc = mt.accuracy_score(y_test, y_hat)
+    # print(mt.confusion_matrix(y_test, y_hat))
+    
+    print_accuracy('decision tree (max features %s)'%max_features, acc)
+    # print(dt_clf.n_features_) # 47
+
+run_decision_tree(max_features=None)
+run_decision_tree(max_features=5)
+
+print('')
 
 #-------Bayes-------#
 def run_multinomial_bayes(alpha):

@@ -6,7 +6,7 @@ execfile('python/clean_data_person.py')
 # Create a new categorical variable to seperate people who make more (or less) than 100K
 df['affluency'] = pd.cut(df.PINCP, [-1, 99999.99, 1e12], labels=('general', 'rich'))
 
-important_features = important_features + ['affluency']
+important_features = important_features + ['affluency', 'ST']
 
 # based on: https://github.com/eclarson/DataMiningNotebooks/blob/master/04.%20Logits%20and%20SVM.ipynb
 ### create a new, linear regression, dataset
@@ -37,6 +37,10 @@ lr.is_male = lr.is_male.astype(np.int)
 del lr['SEX']
 
 ### One-hot-encoding categorical - so that we have just continuous
+one_hot_state = pd.get_dummies(lr.ST, prefix='State_')
+lr = pd.concat((lr, one_hot_state), axis=1)
+del lr['ST']
+
 one_hot_travel_time = pd.get_dummies(lr.travel_time, prefix='Travel_Time_')
 lr = pd.concat((lr, one_hot_travel_time), axis=1)
 del lr['travel_time']

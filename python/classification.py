@@ -15,15 +15,18 @@ import seaborn as sns
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import StratifiedKFold
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import SGDClassifier
 
 def print_accuracy(algorithm, accuracy):
     accuracy = round(accuracy*100, 2)
     print('accuracy %s%% %s' % (accuracy, algorithm))
     
+
+#-------Stratified K Fold---------#
 def clean_data_for_analysis():
    global lr2
    ### Create reponse and explanatory variables
@@ -37,42 +40,62 @@ def clean_data_for_analysis():
    scl_obj.fit(X)
    X = scl_obj.transform(X)
    
-   ### Get training/test data
-   return train_test_split(X, y, test_size=.2, random_state=0)
+   skf = StratifiedKFold(n_splits=5)
 
-X_train, X_test, y_train, y_test = clean_data_for_analysis()
+   skf.get_n_splits(X, y)
+   
+   _data = []
+   for train_index, test_index in skf.split(X, y):
+      X_train, X_test = X[train_index], X[test_index]
+      y_train, y_test = y[train_index], y[test_index]
+      _data.append([X_train, X_test, y_train, y_test])
+      
+   return _data
+   
+   ### Get training/test data
+   #return train_test_split(X, y, test_size=.2, random_state=0)
+
+
+_data = clean_data_for_analysis()
+
+
+
+
+#-------Generic function for running models---------#
+
+def fit_and_test(title, test_train, show_individual_accuracies=True, print_confusion=False):
+   accuracies = pd.Series()
+   for X_train, X_test, y_train, y_test in _data:
+      test_train.fit(X_train, y_train)
+      y_hat = test_train.predict(X_test)
+      
+      acc = mt.accuracy_score(y_test, y_hat)
+      accuracies = accuracies.append(pd.Series(acc))
+      
+      if print_confusion:
+         print(mt.confusion_matrix(y_test, y_hat))
+      
+      if show_individual_accuracies:
+         print_accuracy(title, acc)
+   print('%s avg acc - ' % accuracies.mean() + title)
+         
+
 
 #-------Decision Tree-------#
 def run_decision_tree(max_features):
-    # TODO: tweak alpha
-    dt_clf = DecisionTreeClassifier(max_features=max_features, class_weight='balanced')
-    
-    dt_clf.fit(X_train, y_train)
-    y_hat = dt_clf.predict(X_test)
-    
-    acc = mt.accuracy_score(y_test, y_hat)
-    # print(mt.confusion_matrix(y_test, y_hat))
-    
-    print_accuracy('decision tree (max features %s)'%max_features, acc)
-    # print(dt_clf.n_features_) # 47
+   dt_clf = DecisionTreeClassifier(max_features=max_features, class_weight='balanced')
+   fit_and_test('decision tree', dt_clf, show_individual_accuracies=False)
+
 
 run_decision_tree(max_features=None)
-run_decision_tree(max_features=5)
+run_decision_tree(max_features=4)
 
 print('')
 
 #-------Bayes-------#
 def run_multinomial_bayes(alpha):
-    # TODO: tweak alpha
     mb_clf = MultinomialNB(alpha=alpha)
-    
-    mb_clf.fit(X_train, y_train)
-    y_hat = mb_clf.predict(X_test)
-    
-    acc = mt.accuracy_score(y_test, y_hat)
-    # print(mt.confusion_matrix(y_test, y_hat))
-    
-    print_accuracy('bayes multinomial %s'%(alpha), acc)
+    fit_and_test('bayes multinomial %s'%(alpha), mb_clf, show_individual_accuracies=False)
 
 run_multinomial_bayes(100)
 run_multinomial_bayes(1)
@@ -84,16 +107,9 @@ print('')
 def run_bernoulli_bayes(alpha, binarize=.0):
     # TODO: tweak alpha
     mb_clf = BernoulliNB(alpha=alpha, binarize = binarize)
-    
-    mb_clf.fit(X_train, y_train)
-    y_hat = mb_clf.predict(X_test)
-    
-    acc = mt.accuracy_score(y_test, y_hat)
-    # print(mt.confusion_matrix(y_test, y_hat))
-    
     title_with_params = 'bayes bernoulli %s, %s' % (alpha, binarize)
     
-    print_accuracy(title_with_params, acc)
+    fit_and_test(title_with_params, mb_clf, show_individual_accuracies=False)
 
 run_bernoulli_bayes(10000)
 run_bernoulli_bayes(.1)
@@ -106,14 +122,7 @@ print('')
 def run_gaussian_bayes():
     # TODO: tweak alpha
     mb_clf = GaussianNB()
-    
-    mb_clf.fit(X_train, y_train)
-    y_hat = mb_clf.predict(X_test)
-    
-    acc = mt.accuracy_score(y_test, y_hat)
-    # print(mt.confusion_matrix(y_test, y_hat))
-    
-    print_accuracy('bayes gaussian', acc)
+    fit_and_test('bayes gaussian', mb_clf, show_individual_accuracies=False)
 
 run_gaussian_bayes()
 
@@ -125,16 +134,7 @@ def run_logistic_regression():
    ### Create reusable logistic regression object
    global lr_clf
    lr_clf = LogisticRegression(penalty='l2', C=0.05, class_weight='balanced')
-   
-   ### Create and test accuracy of our model
-   lr_clf.fit(X_train, y_train)
-   ## TODO: use cross validation!
-   y_hat = lr_clf.predict(X_test)
-   
-   acc = mt.accuracy_score(y_test, y_hat)
-   conf = mt.confusion_matrix(y_test, y_hat)
-   
-   print_accuracy('logistic regression', acc)
+   fit_and_test('logistic regression', lr_clf, show_individual_accuracies=False)
    # print(conf)
 
 run_logistic_regression()
@@ -177,8 +177,6 @@ def bgd():
 #bgd()
 
 ### Using SGD
-from sklearn.model_selection import StratifiedShuffleSplit 
-from sklearn.linear_model import SGDClassifier
 
 def run_sgd():
    regularize_const = 0.1
@@ -187,13 +185,7 @@ def run_sgd():
            fit_intercept=True, l1_ratio=0.0, learning_rate='optimal',
            loss='hinge', n_iter=iterations, n_jobs=-1, penalty='l2')
    
-   svm_sgd.fit(X_train, y_train)
-   y_hat = svm_sgd.predict(X_test)
-   
-   acc = mt.accuracy_score(y_test, y_hat)
-   conf = mt.confusion_matrix(y_test, y_hat)
-   
-   print_accuracy('gradient descent', acc)
+   fit_and_test('gradient descent', svm_sgd, show_individual_accuracies=False)
 
 run_sgd()
 
@@ -202,14 +194,7 @@ def run_knn():
     ## seems to default to kd_tree
     ## TODO: see if parameters can be used to tweak
     knn_clf = KNeighborsClassifier()
-    knn_clf.fit(X_train, y_train)
-    
-    y_hat = knn_clf.predict(X_test)
-    
-    conf = mt.confusion_matrix(y_test, y_hat)
-    acc = mt.accuracy_score(y_test,y_hat)
-    
-    print_accuracy('KNN', acc)
+    fit_and_test('knn', knn_clf, show_individual_accuracies=False)
 
 # run_knn()
 

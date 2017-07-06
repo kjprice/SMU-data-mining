@@ -20,6 +20,10 @@ del lr['PINCP']
 
 ### Group "travel time"
 lr.JWMNP = lr.JWMNP.fillna(-1)
+lr.JWAP = lr.JWAP.fillna(-1)
+lr.YOEP = lr.YOEP.fillna(-1)
+lr.LANP = lr.LANP.fillna(-1)
+lr.DECADE = lr.DECADE.fillna(-1)
 lr['travel_time'] = pd.cut(lr.JWMNP, (-2, 0, 15, 40, 60, lr.JWMNP.max()), labels=['na', 'short', 'half hour', 'hour', 'long'])
 del lr['JWMNP']
 

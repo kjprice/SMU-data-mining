@@ -13,6 +13,10 @@ important_continuous_features = [
     'AGEP',     # Age of person (continuous 0-95)
     'PWGTP',    # Person's weight (continuous)
     'PAP',      # Public assistance income in past 12 months
+    'JWAP',     # Time of arrival at work - hour and minute
+    'YOEP',     # Year of entry
+    'LANP',     # Language spoken at home
+    'DECADE'    # Decade of entry
 ]
 importegorical_features = [
     'CIT',  # Citizenship status (categorical - string)

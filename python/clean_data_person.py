@@ -365,6 +365,11 @@ df.MIL = df.MIL \
 # Take rows where income is less than $150,000
 df_small_income = df[df.PINCP < 150000]
 
+# Create a new categorical variable to seperate people who make more (or less) than 100K
+df['affluency'] = pd.cut(df.PINCP, [-1, 99999.99, 1e12], labels=('general', 'rich'))
+
+important_features = important_features + ['affluency'] # + pca_features.tolist()
+
 
 
 

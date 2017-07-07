@@ -14,7 +14,6 @@ import seaborn as sns
 
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
-from sklearn.model_selection import StratifiedKFold
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier

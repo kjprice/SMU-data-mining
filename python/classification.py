@@ -25,43 +25,12 @@ def print_accuracy(algorithm, accuracy):
     print('accuracy %s%% %s' % (accuracy, algorithm))
     
 
-#-------Stratified K Fold---------#
-def clean_data_for_analysis():
-   global lr2
-   ### Create reponse and explanatory variables
-   lr2 = lr.copy(deep=True)
-   y = lr2.wealthy.values
-   del lr2['wealthy']
-   X = lr2.values
-   
-   ### Standardize X values
-   scl_obj = MinMaxScaler()
-   scl_obj.fit(X)
-   X = scl_obj.transform(X)
-   
-   skf = StratifiedKFold(n_splits=5)
-
-   skf.get_n_splits(X, y)
-   
-   _data = []
-   for train_index, test_index in skf.split(X, y):
-      X_train, X_test = X[train_index], X[test_index]
-      y_train, y_test = y[train_index], y[test_index]
-      _data.append([X_train, X_test, y_train, y_test])
-      
-   return _data
-
-
-_data = clean_data_for_analysis()
-
-
-
 
 #-------Generic function for running models---------#
 
 def fit_and_test(title, test_train, show_individual_accuracies=True, print_confusion=False):
    accuracies = pd.Series()
-   for X_train, X_test, y_train, y_test in _data:
+   for X_train, X_test, y_train, y_test in test_train_data:
       test_train.fit(X_train, y_train)
       y_hat = test_train.predict(X_test)
       

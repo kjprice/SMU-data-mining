@@ -1,6 +1,12 @@
+from sklearn.decomposition import PCA
+
+pca_components_to_use = 5
+
 df = person_raw.copy(deep=True)
 
 df = df[df.AGEP > 18]
+
+df.index = range(0, len(df))
 
 ### This seems to be necessary to make stacked barplots on one feature
 df.dummy = True
@@ -25,6 +31,9 @@ importegorical_features = [
     'MAR'       # Marital Status
 ]
 important_features = important_continuous_features + importegorical_features;
+
+### PCA Features - created later (in the format PCA_0, PCA_1, etc)
+pca_features = 'PCA_' + pd.Series(range(0, pca_components_to_use)).map(str)
 
 dollar_features = [
     'PINCP', # Total person's income (signed)
@@ -181,8 +190,42 @@ insurance_features = [
 ]
 
 
+def create_pca():
+   features_for_pca = dollar_features +\
+      location_features +\
+      occupation_features +\
+      demographic_features +\
+      personal_features +\
+      relationship_features +\
+      education_features +\
+      military_features +\
+      year_features +\
+      disability_features +\
+      insurance_features
+   
+   pca_df = df[features_for_pca].copy(deep=True)
 
+   # obviously we don't want our response variable in the PCA
+   del pca_df['PINCP']
+   
+   pca_df = pca_df.fillna(-1)
+   
+   X = pca_df.values
 
+   scl_obj = MinMaxScaler()
+   scl_obj.fit(X)
+   X = scl_obj.transform(X)
+   
+   pca = PCA(n_components=pca_components_to_use)
+   X_pca = pca.fit(X).transform(X)
+   
+   pca_df = pd.DataFrame(X_pca)
+   
+   pca_df.columns = pca_features
+   
+   return pca_df
+
+df = pd.concat([df, create_pca()], axis=1)
 
 
 

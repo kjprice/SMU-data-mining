@@ -1,12 +1,10 @@
-from sklearn.model_selection import ShuffleSplit
-
 execfile('python/load_data_person.py')
 execfile('python/clean_data_person.py')
 
 # Create a new categorical variable to seperate people who make more (or less) than 100K
 df['affluency'] = pd.cut(df.PINCP, [-1, 99999.99, 1e12], labels=('general', 'rich'))
 
-important_features = important_features + ['affluency']
+important_features = important_features + ['affluency'] # + pca_features.tolist()
 
 # based on: https://github.com/eclarson/DataMiningNotebooks/blob/master/04.%20Logits%20and%20SVM.ipynb
 ### create a new, linear regression, dataset

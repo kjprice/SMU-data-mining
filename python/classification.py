@@ -20,10 +20,14 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
 
-def print_accuracy(algorithm, accuracy):
+def print_accuracy(title, accuracy, avg=False):
     accuracy = round(accuracy*100, 2)
-    print('accuracy %s%% %s' % (accuracy, algorithm))
-    
+    avg_text = 'avg' if avg else ''
+    bullet = ''
+    if not avg:
+       bullet = '**'
+    print('%s%s%% %s accuracy - %s' % (bullet, accuracy, avg_text, title))
+
 
 
 #-------Generic function for running models---------#
@@ -42,8 +46,8 @@ def fit_and_test(title, test_train, show_individual_accuracies=True, print_confu
       
       if show_individual_accuracies:
          print_accuracy(title, acc)
-   print('%s avg acc - ' % accuracies.mean() + title)
-         
+   print_accuracy(title, accuracies.mean(), avg=True)
+
 
 
 #-------Decision Tree-------#

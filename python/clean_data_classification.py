@@ -2,7 +2,6 @@ from sklearn.model_selection import StratifiedKFold
 
 # based on: https://github.com/eclarson/DataMiningNotebooks/blob/master/04.%20Logits%20and%20SVM.ipynb
 ### create a new, linear regression, dataset
-print ('created new dataset for classification/logistic regression "lr"')
 lr = df[important_features].copy(deep=True)
 
 ### Remove unwanted fields
@@ -60,12 +59,9 @@ del lr['MAR']
 
 
 
-print ('After cleaning "lr" dataset:')
-print (lr.info())
-
 
 #-------Stratified K Fold---------#
-def clean_data_for_analysis():
+def create_stratified_transformed_dataset():
    global lr2
    ### Create reponse and explanatory variables
    lr2 = lr.copy(deep=True)
@@ -91,10 +87,7 @@ def clean_data_for_analysis():
    return _data
 
 
-test_train_data = clean_data_for_analysis()
-
-print('Created k-fold datasets accessible by the global variable "test_train_data"')
-
+test_train_data = create_stratified_transformed_dataset()
 
 
 

@@ -74,7 +74,7 @@ def create_stratified_transformed_dataset():
    scl_obj.fit(X)
    X = scl_obj.transform(X)
    
-   skf = StratifiedKFold(n_splits=5)
+   skf = StratifiedKFold(n_splits=10)
 
    skf.get_n_splits(X, y)
    

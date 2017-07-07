@@ -14,7 +14,6 @@ import seaborn as sns
 
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
-from sklearn.model_selection import train_test_split
 from sklearn.model_selection import StratifiedKFold
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.tree import DecisionTreeClassifier
@@ -52,9 +51,6 @@ def clean_data_for_analysis():
       _data.append([X_train, X_test, y_train, y_test])
       
    return _data
-   
-   ### Get training/test data
-   #return train_test_split(X, y, test_size=.2, random_state=0)
 
 
 _data = clean_data_for_analysis()

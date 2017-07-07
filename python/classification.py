@@ -18,6 +18,7 @@ from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 def print_accuracy(title, accuracy, avg=False):
     accuracy = round(accuracy*100, 2)
@@ -31,7 +32,7 @@ def print_accuracy(title, accuracy, avg=False):
 
 #-------Generic function for running models---------#
 
-def fit_and_test(title, test_train, show_individual_accuracies=True, print_confusion=False):
+def fit_and_test(title, test_train, show_individual_accuracies=False, print_confusion=False):
    accuracies = pd.Series()
    for X_train, X_test, y_train, y_test in test_train_data:
       test_train.fit(X_train, y_train)
@@ -52,11 +53,15 @@ def fit_and_test(title, test_train, show_individual_accuracies=True, print_confu
 #-------Decision Tree-------#
 def run_decision_tree(max_features):
    dt_clf = DecisionTreeClassifier(max_features=max_features, class_weight='balanced')
-   fit_and_test('decision tree', dt_clf, show_individual_accuracies=False)
+   fit_and_test('decision tree', dt_clf)
 
 
 run_decision_tree(max_features=None)
 run_decision_tree(max_features=4)
+
+dt_clf = RandomForestClassifier(class_weight='balanced')
+fit_and_test('Random Forest', dt_clf)
+
 
 print('')
 

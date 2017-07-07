@@ -19,7 +19,6 @@ from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
-from sklearn.preprocessing import MinMaxScaler
 
 def print_accuracy(algorithm, accuracy):
     accuracy = round(accuracy*100, 2)

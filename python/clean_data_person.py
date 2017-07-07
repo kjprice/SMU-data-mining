@@ -1,3 +1,4 @@
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.decomposition import PCA
 
 pca_components_to_use = 5

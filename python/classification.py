@@ -20,6 +20,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
+from datetime import datetime
 
 def print_accuracy(title, accuracy, avg=False):
     accuracy = round(accuracy*100, 2)
@@ -29,11 +30,13 @@ def print_accuracy(title, accuracy, avg=False):
        bullet = '**'
     print('%s%s%% %s accuracy - %s' % (bullet, accuracy, avg_text, title))
 
-
+methodSpeeds = []
+methodSpeedNames = []
 
 #-------Generic function for running models---------#
 
 def fit_and_test(title, test_train, show_individual_accuracies=False, print_confusion=False):
+   startTime = datetime.now()
    accuracies = pd.Series()
    for X_train, X_test, y_train, y_test in test_train_data:
       test_train.fit(X_train, y_train)
@@ -48,6 +51,9 @@ def fit_and_test(title, test_train, show_individual_accuracies=False, print_conf
       if show_individual_accuracies:
          print_accuracy(title, acc)
    print_accuracy(title, accuracies.mean(), avg=True)
+   methodSpeedNames.append(test_train.__class__.__name__)
+   timePassed = datetime.now() - startTime
+   methodSpeeds.append(timePassed.total_seconds())
 
 
 
@@ -241,4 +247,7 @@ def create_join_plot(svm_clf):
    tips = sns.load_dataset("tips")
    g = sns.jointplot(x="AGEP", y="SVM_support_vectors", data=svm_clf)
 
-
+def showSpeedPlot():
+   speeds = pd.DataFrame({'method': methodSpeedNames, 'time': methodSpeeds})
+   speeds.plot.bar(x='method', y='time')
+showSpeedPlot()

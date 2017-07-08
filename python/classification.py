@@ -19,6 +19,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 
 def print_accuracy(title, accuracy, avg=False):
     accuracy = round(accuracy*100, 2)
@@ -128,8 +129,6 @@ def get_weights():
 #----------SVM-------------#
 
 ### Using Batch Gradient Descent, we get accuracy of 78.2% (compared to 77.2% using SGD), but it takes 3 minutes to calculate
-from sklearn.svm import SVC
-
 def bgd():
    from datetime import datetime
    startTime = datetime.now()

@@ -278,7 +278,7 @@ showSpeedPlot()
 
 
 
-####Decision Tree Regression
+####Decision Tree Regression - this is good and complete
 #http://scikit-learn.org/stable/auto_examples/tree/plot_tree_regression.html
 
 def decision_tree_regressor_example():
@@ -287,6 +287,45 @@ def decision_tree_regressor_example():
     return
 
 decision_tree_regressor_example()
+
+
+
+####Visualization of the Decision Tree Classifier - Will this work for regression
+####http://scikit-learn.org/stable/modules/tree.html
+
+#Code that is needed for windows to find the path of the Graphviz - may not be needed by all
+import os
+os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin'
+
+#Load packages for the decision tree visual
+from sklearn import tree
+import graphviz
+import pydotplus
+
+#Create the Tree
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(lr2.data, lr2.target)
+
+with open("wealth.dot", 'w') as f:
+    f = tree.export_graphviz(clf, out_file=f)
+os.unlink('wealth.dot')
+
+import pydotplus 
+wealth_reg = tree.export_graphviz(clf, out_file=None) 
+graph = pydotplus.graph_from_wealth_reg(wealth_reg) 
+graph.write_pdf("wealth.pdf") 
+
+
+#Display the decision tree in python notebook - will not display in rodeo
+from IPython.display import Image  
+wealth_reg = tree.export_graphviz(clf, out_file=None, 
+    wealth=x,
+    class_names=lr2.target_names,
+    filled=True, rounded=True,  
+    special_characters=True)  
+graph = pydotplus.graph_from_wealth_reg(wealth_reg)  
+Image(graph.create_png())
+
 
 
 ###Comparison of Algorithms
@@ -298,6 +337,16 @@ def showAlgorithmMetricPlots():
     ax.set_xticklabels(names, rotation=90)
     plt.show()
 showAlgorithmMetricPlots()
-    
 
+
+####Kernel ridge regression - - Memory Issue - - I will look at more when i return
+####http://scikit-learn.org/stable/modules/generated/sklearn.kernel_ridge.KernelRidge.html#sklearn.kernel_ridge.KernelRidge
+from sklearn.kernel_ridge import KernelRidge
+
+def kernel_ridge_reg():
+    kr_reg = KernelRidge(alpha=.05)
+    fit_and_test("Kernel Ridge Regressor", kr_reg, regression=True, scoring='r2')
+    return
+   
+kernel_ridge_reg()
 

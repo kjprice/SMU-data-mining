@@ -38,12 +38,15 @@ methodSpeedNames = []
 
 
 
-def get_X_y():
+def get_X_y(regression=False):
    global lr2
    ### Create reponse and explanatory variables
    lr2 = lr.copy(deep=True)
    y = list(lr2.wealthy.values)
+   if regression:
+       y = list(lr2.PINCP.values)
    del lr2['wealthy']
+   del lr2['PINCP']
    X = lr2.values
    
    ### Standardize X values

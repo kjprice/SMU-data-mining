@@ -21,6 +21,8 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from datetime import datetime
+from matplotlib.pyplot as plt
+
 
 def print_accuracy(title, accuracy, avg=False):
     accuracy = round(accuracy*100, 2)
@@ -251,3 +253,102 @@ def showSpeedPlot():
    speeds = pd.DataFrame({'method': methodSpeedNames, 'time': methodSpeeds})
    speeds.plot.bar(x='method', y='time')
 showSpeedPlot()
+
+
+
+####Comparison of Algorithms####
+###http://machinelearningmastery.com/compare-machine-learning-algorithms-python-scikit-learn/####
+###
+
+import pandas
+import matplotlib.pyplot as plt
+from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+
+# load dataset
+array = lr2.values
+X = array[:,0:8]
+Y = array[:,8]
+
+# prepare configuration for cross validation test harness
+seed = 7
+
+# prepare models
+models = []
+models.append(('LR', LogisticRegression()))
+models.append(('LDA', LinearDiscriminantAnalysis()))
+models.append(('KNN', KNeighborsClassifier()))
+models.append(('CART', DecisionTreeClassifier()))
+models.append(('NB', GaussianNB()))
+models.append(('SVM', SVC()))
+
+# evaluate each model in turn
+results = []
+names = []
+scoring = 'accuracy'
+for name, model in models:
+	kfold = model_selection.KFold(n_splits=10, random_state=seed)
+	cv_results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+	results.append(cv_results)
+	names.append(name)
+	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+	print(msg)
+
+# boxplot algorithm comparison
+fig = plt.figure()
+fig.suptitle('Algorithm Comparison')
+ax = fig.add_subplot(111)
+plt.boxplot(results)
+ax.set_xticklabels(names)
+plt.show()
+
+
+
+####Visual for clustering Algorithms####
+#http://hdbscan.readthedocs.io/en/latest/comparing_clustering_algorithms.html
+####The use of these could be for exceptional since they are not covered in the material
+
+
+
+####Decision Tree Regression
+#http://scikit-learn.org/stable/auto_examples/tree/plot_tree_regression.html
+
+#import numpy as np
+from sklearn.tree import DecisionTreeRegressor
+import matplotlib.pyplot as plt
+
+# Create a random dataset
+rng = np.random.RandomState(1)
+X = np.sort(5 * rng.rand(80, 1), axis=0)
+y = np.sin(X).ravel()
+y[::5] += 3 * (0.5 - rng.rand(16))
+
+# Fit regression model
+regr_1 = DecisionTreeRegressor(max_depth=2)
+regr_2 = DecisionTreeRegressor(max_depth=5)
+regr_1.fit(X, y)
+regr_2.fit(X, y)
+
+# Predict
+X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
+y_1 = regr_1.predict(X_test)
+y_2 = regr_2.predict(X_test)
+
+# Plot the results
+plt.figure()
+plt.scatter(X, y, c="darkorange", label="data")
+plt.plot(X_test, y_1, color="cornflowerblue", label="max_depth=2", linewidth=2)
+plt.plot(X_test, y_2, color="yellowgreen", label="max_depth=5", linewidth=2)
+plt.xlabel("data")
+plt.ylabel("target")
+plt.title("Decision Tree Regression")
+plt.legend()
+plt.show()
+
+
+

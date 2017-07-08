@@ -280,7 +280,7 @@ showSpeedPlot()
 #import numpy as np
 
 # Create a random dataset
-def random_forest_example():
+def decision_tree_regressor_example():
     rng = np.random.RandomState(1)
     X = np.sort(5 * rng.rand(80, 1), axis=0)
     y = np.sin(X).ravel()
@@ -307,7 +307,7 @@ def random_forest_example():
     plt.title("Decision Tree Regression")
     plt.legend()
     plt.show()
-random_forest_example()
+decision_tree_regressor_example()
 
 
 fig = plt.figure()

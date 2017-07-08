@@ -21,7 +21,7 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from datetime import datetime
-from matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 
 def print_accuracy(title, accuracy, avg=False):
@@ -181,7 +181,6 @@ def run_knn():
 
 ####Create series of the weights and map
 def plot_series_of_weights():
-   from matplotlib import pyplot as plt
    %matplotlib inline
    plt.style.use('ggplot')
    
@@ -261,7 +260,6 @@ showSpeedPlot()
 ###
 
 import pandas
-import matplotlib.pyplot as plt
 from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -320,7 +318,6 @@ plt.show()
 
 #import numpy as np
 from sklearn.tree import DecisionTreeRegressor
-import matplotlib.pyplot as plt
 
 # Create a random dataset
 rng = np.random.RandomState(1)

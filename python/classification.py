@@ -20,6 +20,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.svm import SVC
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -53,12 +54,17 @@ def get_X_y():
    return (X,y)
 
 
+_results = []
+names = []
 
 def fit_and_test(title, model, show_individual_accuracies=False, print_confusion=False):
     startTime = datetime.now()
 
     X, y = get_X_y()
     cv_results = model_selection.cross_val_score(model, X, y, cv=10, scoring='accuracy')
+    
+    _results.append(cv_results)
+    names.append(title)
     
     print_accuracy(title, cv_results)
 
@@ -272,7 +278,6 @@ showSpeedPlot()
 #http://scikit-learn.org/stable/auto_examples/tree/plot_tree_regression.html
 
 #import numpy as np
-from sklearn.tree import DecisionTreeRegressor
 
 # Create a random dataset
 def random_forest_example():
@@ -303,5 +308,14 @@ def random_forest_example():
     plt.legend()
     plt.show()
 random_forest_example()
+
+
+fig = plt.figure()
+fig.suptitle('Algorithm Comparison')
+ax = fig.add_subplot(111)
+plt.boxplot(_results)
+ax.set_xticklabels(names)
+plt.show()
+
     
-    
+

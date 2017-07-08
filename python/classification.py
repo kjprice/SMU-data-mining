@@ -295,8 +295,8 @@ fig = plt.figure()
 fig.suptitle('Algorithm Comparison')
 ax = fig.add_subplot(111)
 plt.boxplot(_results)
-ax.set_xticklabels(names)
+ax.set_xticklabels(names, rotation=90)
 plt.show()
 
-    
+
 

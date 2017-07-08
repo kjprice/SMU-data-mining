@@ -7,7 +7,6 @@ lr = df[important_features].copy(deep=True)
 ### Remove unwanted fields
 del lr['POVPIP']
 del lr['PUMA']
-del lr['PINCP']
 
 ### Group "travel time"
 lr.JWMNP = lr.JWMNP.fillna(-1)

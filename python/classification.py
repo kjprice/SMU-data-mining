@@ -53,18 +53,19 @@ def get_X_y(regression=False):
    scl_obj = MinMaxScaler()
    scl_obj.fit(X)
    X = scl_obj.transform(X)
-      
+ 
    return (X,y)
 
 
 _results = []
 names = []
 
-def fit_and_test(title, model, show_individual_accuracies=False, print_confusion=False):
+def fit_and_test(title, model, show_individual_accuracies=False, print_confusion=False, regression=False, scoring='accuracy'):
     startTime = datetime.now()
 
-    X, y = get_X_y()
-    cv_results = model_selection.cross_val_score(model, X, y, cv=10, scoring='accuracy')
+    X, y = get_X_y(regression)
+    
+    cv_results = model_selection.cross_val_score(model, X, y, cv=10, scoring=scoring)
     
     _results.append(cv_results)
     names.append(title)
@@ -280,38 +281,15 @@ showSpeedPlot()
 ####Decision Tree Regression
 #http://scikit-learn.org/stable/auto_examples/tree/plot_tree_regression.html
 
-#import numpy as np
-
-# Create a random dataset
 def decision_tree_regressor_example():
-    rng = np.random.RandomState(1)
-    X = np.sort(5 * rng.rand(80, 1), axis=0)
-    y = np.sin(X).ravel()
-    y[::5] += 3 * (0.5 - rng.rand(16))
-    
-    # Fit regression model
-    regr_1 = DecisionTreeRegressor(max_depth=2)
-    regr_2 = DecisionTreeRegressor(max_depth=5)
-    regr_1.fit(X, y)
-    regr_2.fit(X, y)
-    
-    # Predict
-    X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
-    y_1 = regr_1.predict(X_test)
-    y_2 = regr_2.predict(X_test)
-    
-    # Plot the results
-    plt.figure()
-    plt.scatter(X, y, c="darkorange", label="data")
-    plt.plot(X_test, y_1, color="cornflowerblue", label="max_depth=2", linewidth=2)
-    plt.plot(X_test, y_2, color="yellowgreen", label="max_depth=5", linewidth=2)
-    plt.xlabel("data")
-    plt.ylabel("target")
-    plt.title("Decision Tree Regression")
-    plt.legend()
-    plt.show()
+    dt_reg = DecisionTreeRegressor(max_depth=5)
+    fit_and_test("Decision Tree Regressor", dt_reg, regression=True, scoring='r2')
+    return
+
 decision_tree_regressor_example()
 
+
+###Comparison of Algorithms
 
 fig = plt.figure()
 fig.suptitle('Algorithm Comparison')

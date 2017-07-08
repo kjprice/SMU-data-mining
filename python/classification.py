@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
@@ -24,39 +25,46 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 
-def print_accuracy(title, accuracy, avg=False):
-    accuracy = round(accuracy*100, 2)
-    avg_text = 'avg' if avg else ''
-    bullet = ''
-    if not avg:
-       bullet = '**'
-    print('%s%s%% %s accuracy - %s' % (bullet, accuracy, avg_text, title))
+def print_accuracy(title, results):
+    accuracy = round(results.mean()*100, 2)
+    std = round(results.std(), 6)
+    print('%s%% accuracy (%s std) - %s' % (accuracy, std, title))
 
 methodSpeeds = []
 methodSpeedNames = []
 
 #-------Generic function for running models---------#
 
-def fit_and_test(title, test_train, show_individual_accuracies=False, print_confusion=False):
-   startTime = datetime.now()
-   accuracies = pd.Series()
-   for X_train, X_test, y_train, y_test in test_train_data:
-      test_train.fit(X_train, y_train)
-      y_hat = test_train.predict(X_test)
-      
-      acc = mt.accuracy_score(y_test, y_hat)
-      accuracies = accuracies.append(pd.Series(acc))
-      
-      if print_confusion:
-         print(mt.confusion_matrix(y_test, y_hat))
-      
-      if show_individual_accuracies:
-         print_accuracy(title, acc)
-   print_accuracy(title, accuracies.mean(), avg=True)
-   methodSpeedNames.append(test_train.__class__.__name__)
-   timePassed = datetime.now() - startTime
-   methodSpeeds.append(timePassed.total_seconds())
 
+
+def get_X_y():
+   global lr2
+   ### Create reponse and explanatory variables
+   lr2 = lr.copy(deep=True)
+   y = list(lr2.wealthy.values)
+   del lr2['wealthy']
+   X = lr2.values
+   
+   ### Standardize X values
+   scl_obj = MinMaxScaler()
+   scl_obj.fit(X)
+   X = scl_obj.transform(X)
+      
+   return (X,y)
+
+
+
+def fit_and_test(title, model, show_individual_accuracies=False, print_confusion=False):
+    startTime = datetime.now()
+
+    X, y = get_X_y()
+    cv_results = model_selection.cross_val_score(model, X, y, cv=10, scoring='accuracy')
+    
+    print_accuracy(title, cv_results)
+
+    methodSpeedNames.append(model.__class__.__name__)
+    timePassed = datetime.now() - startTime
+    methodSpeeds.append(timePassed.total_seconds())
 
 
 #-------Decision Tree-------#
@@ -254,59 +262,6 @@ def showSpeedPlot():
 showSpeedPlot()
 
 
-
-####Comparison of Algorithms####
-###http://machinelearningmastery.com/compare-machine-learning-algorithms-python-scikit-learn/####
-###
-
-import pandas
-from sklearn import model_selection
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.naive_bayes import GaussianNB
-from sklearn.svm import SVC
-
-# load dataset
-array = lr2.values
-X = array[:,0:8]
-Y = array[:,8]
-
-# prepare configuration for cross validation test harness
-seed = 7
-
-# prepare models
-models = []
-models.append(('LR', LogisticRegression()))
-models.append(('LDA', LinearDiscriminantAnalysis()))
-models.append(('KNN', KNeighborsClassifier()))
-models.append(('CART', DecisionTreeClassifier()))
-models.append(('NB', GaussianNB()))
-models.append(('SVM', SVC()))
-
-# evaluate each model in turn
-results = []
-names = []
-scoring = 'accuracy'
-for name, model in models:
-	kfold = model_selection.KFold(n_splits=10, random_state=seed)
-	cv_results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
-	results.append(cv_results)
-	names.append(name)
-	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
-	print(msg)
-
-# boxplot algorithm comparison
-fig = plt.figure()
-fig.suptitle('Algorithm Comparison')
-ax = fig.add_subplot(111)
-plt.boxplot(results)
-ax.set_xticklabels(names)
-plt.show()
-
-
-
 ####Visual for clustering Algorithms####
 #http://hdbscan.readthedocs.io/en/latest/comparing_clustering_algorithms.html
 ####The use of these could be for exceptional since they are not covered in the material
@@ -320,32 +275,33 @@ plt.show()
 from sklearn.tree import DecisionTreeRegressor
 
 # Create a random dataset
-rng = np.random.RandomState(1)
-X = np.sort(5 * rng.rand(80, 1), axis=0)
-y = np.sin(X).ravel()
-y[::5] += 3 * (0.5 - rng.rand(16))
-
-# Fit regression model
-regr_1 = DecisionTreeRegressor(max_depth=2)
-regr_2 = DecisionTreeRegressor(max_depth=5)
-regr_1.fit(X, y)
-regr_2.fit(X, y)
-
-# Predict
-X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
-y_1 = regr_1.predict(X_test)
-y_2 = regr_2.predict(X_test)
-
-# Plot the results
-plt.figure()
-plt.scatter(X, y, c="darkorange", label="data")
-plt.plot(X_test, y_1, color="cornflowerblue", label="max_depth=2", linewidth=2)
-plt.plot(X_test, y_2, color="yellowgreen", label="max_depth=5", linewidth=2)
-plt.xlabel("data")
-plt.ylabel("target")
-plt.title("Decision Tree Regression")
-plt.legend()
-plt.show()
-
-
-
+def random_forest_example():
+    rng = np.random.RandomState(1)
+    X = np.sort(5 * rng.rand(80, 1), axis=0)
+    y = np.sin(X).ravel()
+    y[::5] += 3 * (0.5 - rng.rand(16))
+    
+    # Fit regression model
+    regr_1 = DecisionTreeRegressor(max_depth=2)
+    regr_2 = DecisionTreeRegressor(max_depth=5)
+    regr_1.fit(X, y)
+    regr_2.fit(X, y)
+    
+    # Predict
+    X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
+    y_1 = regr_1.predict(X_test)
+    y_2 = regr_2.predict(X_test)
+    
+    # Plot the results
+    plt.figure()
+    plt.scatter(X, y, c="darkorange", label="data")
+    plt.plot(X_test, y_1, color="cornflowerblue", label="max_depth=2", linewidth=2)
+    plt.plot(X_test, y_2, color="yellowgreen", label="max_depth=5", linewidth=2)
+    plt.xlabel("data")
+    plt.ylabel("target")
+    plt.title("Decision Tree Regression")
+    plt.legend()
+    plt.show()
+random_forest_example()
+    
+    

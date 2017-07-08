@@ -60,38 +60,6 @@ del lr['MAR']
 
 
 
-#-------Stratified K Fold---------#
-def create_stratified_transformed_dataset():
-   global lr2
-   ### Create reponse and explanatory variables
-   lr2 = lr.copy(deep=True)
-   y = lr2.wealthy.values
-   del lr2['wealthy']
-   X = lr2.values
-   
-   ### Standardize X values
-   scl_obj = MinMaxScaler()
-   scl_obj.fit(X)
-   X = scl_obj.transform(X)
-   
-   skf = StratifiedKFold(n_splits=10)
-
-   skf.get_n_splits(X, y)
-   
-   _data = []
-   for train_index, test_index in skf.split(X, y):
-      X_train, X_test = X[train_index], X[test_index]
-      y_train, y_test = y[train_index], y[test_index]
-      _data.append([X_train, X_test, y_train, y_test])
-      
-   return _data
-
-
-test_train_data = create_stratified_transformed_dataset()
-
-
-
-
 
 
 

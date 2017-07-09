@@ -296,7 +296,6 @@ decision_tree_regressor_example()
 
 #Code that is needed for windows to find the path of the Graphviz - may not be needed by all
 import os
-os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin'
 
 #Load packages for the decision tree visual
 from sklearn import tree
@@ -356,6 +355,12 @@ def kernel_ridge_reg():
 kernel_ridge_reg()
 
 F, p = stats.f_oneway(_results[0], _results[1], _results[2], _results[3], _results[4], _results[5])
-print ('F statistic %s and p statistic %s for anova comparison of model accuracies' %(F, p))
+print ('F statistic %s and p-value %s for anova comparison of model accuracies' %(F, p))
+
+
+t, p = stats.ttest_ind(_results[4], _results[5])
+print ('t statistic %s and p-value %s for t-test comparing means of highest-accuracy Bayesian models' %(t, p))
+
+
 
 

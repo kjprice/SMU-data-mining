@@ -13,24 +13,21 @@ import pandas as pd
 import seaborn as sns
 
 from sklearn import model_selection
-from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
-from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.kernel_ridge import KernelRidge
-from sklearn.linear_model import Lasso
-from sklearn.linear_model import Ridge
 from sklearn.svm import SVC
 from datetime import datetime
 import matplotlib.pyplot as plt
 from scipy import stats
-import graphviz
-import pydotplus
 
 
 def print_accuracy(title, results):
@@ -297,34 +294,6 @@ decision_tree_regressor_example()
 
 
 
-####Visualization of the Decision Tree Classifier - Will this work for regression
-####http://scikit-learn.org/stable/modules/tree.html
-
-
-#Create the Tree
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(lr2.data, lr2.target)
-
-with open("wealth.dot", 'w') as f:
-    f = tree.export_graphviz(clf, out_file=f)
-os.unlink('wealth.dot')
-
-wealth_reg = tree.export_graphviz(clf, out_file=None) 
-graph = pydotplus.graph_from_wealth_reg(wealth_reg) 
-graph.write_pdf("wealth.pdf") 
-
-
-#Display the decision tree in python notebook - will not display in rodeo
-from IPython.display import Image  
-wealth_reg = tree.export_graphviz(clf, out_file=None, 
-    wealth=x,
-    class_names=lr2.target_names,
-    filled=True, rounded=True,  
-    special_characters=True)  
-graph = pydotplus.graph_from_wealth_reg(wealth_reg)  
-Image(graph.create_png())
-
-
 
 ###Comparison of Algorithms
 x_results = pd.Series(_results)
@@ -348,6 +317,27 @@ def kernel_ridge_reg():
     fit_and_test("Kernel Ridge Regressor", kr_reg, regression=True, scoring='r2')
     return
    #kernel_ridge_reg()
+
+
+
+####Ridge Regression
+####Uses L2 regularization (add a factor of sum of squares of coeffiecients)  The magnitude of alpha will decide the weights
+####https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-ridge-lasso-regression-python/
+
+def ridge_reg():
+    ridge_reg = Ridge(alpha=.05, normalize=True)
+    fit_and_test("Ridge Regressor", ridge_reg, regression=True, scoring='r2')
+    return
+   
+ridge_reg()
+
+
+####Linear Regression
+def run_linear_regression():
+    linear_reg = LinearRegression(fit_intercept=True, normalize=True, n_jobs=-1)
+    fit_and_test("Linear Regression", linear_reg, regression=True, scoring='r2')
+
+run_linear_regression()
 
 def compare_model_accuracy_using_statistics():
    F, p = stats.f_oneway(_results[0], _results[1], _results[2], _results[3], _results[4], _results[5])
@@ -379,29 +369,27 @@ def get_bayes_coefficients():
    chosen_coeficients + 7
 get_bayes_coefficients()
 
-####Ridge Regression
-####Uses L2 regularization (add a factor of sum of squares of coeffiecients)  The magnitude of alpha will decide the weights
-####https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-ridge-lasso-regression-python/
 
-def ridge_reg():
-    ridge_reg = Ridge(alpha=.05, normalize=True)
-    fit_and_test("Ridge Regressor", ridge_reg, regression=True, scoring='r2')
-    return
+####Visualization of the Decision Tree Classifier - Will this work for regression
+#### http://scikit-learn.org/stable/modules/tree.html
+#Create the Tree
+def visualize_decision_tree():
+   from sklearn import tree
+   import graphviz
+   import pydotplus
+   from IPython.display import Image  
+
+   clf = tree.DecisionTreeClassifier()
+   X, y = get_X_y()
+   clf = clf.fit(X, y)
    
-ridge_reg()
-
-
-####LASSO Regression:  Least Absolute Shrinkage and Selection Operator (absolute & selection)
-####L1 regularization (add a factor of sum of absolute values of coefficients)
-
-#With 
-def lasso_reg():
-    lasso_reg = Lasso(alpha=.05, normalize=True, max_iter=1e5)
-    fit_and_test("Lasso Regressor", lasso_reg, regression=True, scoring='r2')
-    return
-   
-lasso_reg()
-
-
-
+   #Display the decision tree in python notebook - will not display in rodeo
+   dot_data = tree.export_graphviz(clf, out_file=None, 
+       #wealth=X,
+       # class_names=lr2.target_names,
+       filled=True, rounded=True,  
+       special_characters=True)  
+   graph = pydotplus.graph_from_dot_data(dot_data)  
+   Image(graph.create_png())
+# visualize_decision_tree()
 

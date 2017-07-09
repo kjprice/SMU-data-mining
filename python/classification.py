@@ -24,6 +24,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.svm import SVC
 from datetime import datetime
 import matplotlib.pyplot as plt
+from scipy import stats
 
 
 def print_accuracy(title, results):
@@ -353,4 +354,8 @@ def kernel_ridge_reg():
     return
    
 kernel_ridge_reg()
+
+F, p = stats.f_oneway(_results[0], _results[1], _results[2], _results[3], _results[4], _results[5])
+print ('F statistic %s and p statistic %s for anova comparison of model accuracies' %(F, p))
+
 

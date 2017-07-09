@@ -363,4 +363,22 @@ print ('t statistic %s and p-value %s for t-test comparing means of highest-accu
 
 
 
+X, y = get_X_y()
+X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=.2)
+
+mb_clf = MultinomialNB(alpha=1)
+mb_clf.fit(X_train, y_train)
+
+y_hat = mb_clf.predict(X_test)
+
+acc = mt.accuracy_score(y_test, y_hat)
+print(mt.confusion_matrix(y_test, y_hat))
+mt.f1_score(y_test, y_hat)
+
+chosen_coeficients = pd.Series(mb_clf.coef_[0])
+chosen_coeficients.index = lr2.columns
+chosen_coeficients = chosen_coeficients.sort_values()
+
+# All coefficients seem to be negative, let's offset them to show some positive weights
+chosen_coeficients + 7
 

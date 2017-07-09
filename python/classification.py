@@ -273,11 +273,6 @@ def showSpeedPlot():
 showSpeedPlot()
 
 
-####Visual for clustering Algorithms####
-#http://hdbscan.readthedocs.io/en/latest/comparing_clustering_algorithms.html
-####The use of these could be for exceptional since they are not covered in the material
-
-
 
 ####Decision Tree Regression - this is good and complete
 #http://scikit-learn.org/stable/auto_examples/tree/plot_tree_regression.html
@@ -291,41 +286,43 @@ decision_tree_regressor_example()
 
 
 
-####Visualization of the Decision Tree Classifier - Will this work for regression
+####Visualization of the Decision Tree Classifier
+####This looks very cool.   I can run for X & Y - but it is a 1 decision split due to no headers in the X, y.  
+####Attempting to incorporate the lr2 dataframe to do this
 ####http://scikit-learn.org/stable/modules/tree.html
 
 #Code that is needed for windows to find the path of the Graphviz - may not be needed by all
-import os
+# import os
+# os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin'
 
 #Load packages for the decision tree visual
-from sklearn import tree
-import graphviz
-import pydotplus
+# from sklearn import tree
+# import graphviz
+# import pydotplus
 
 #Create the Tree
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(lr2.data, lr2.target)
+# clf = tree.DecisionTreeClassifier()
+# clf = clf.fit(X, y)
 
-with open("wealth.dot", 'w') as f:
-    f = tree.export_graphviz(clf, out_file=f)
-os.unlink('wealth.dot')
+# with open("wealth.dot", 'w') as f:
+#    f = tree.export_graphviz(clf, out_file=f)
+# os.unlink('wealth.dot')
 
-import pydotplus 
-wealth_reg = tree.export_graphviz(clf, out_file=None) 
-graph = pydotplus.graph_from_wealth_reg(wealth_reg) 
-graph.write_pdf("wealth.pdf") 
+# import pydotplus 
+# dot_data = tree.export_graphviz(clf, out_file=None) 
+# graph = pydotplus.graph_from_dot_data(dot_data) 
+# graph.write_pdf("wealth.pdf") 
 
 
 #Display the decision tree in python notebook - will not display in rodeo
-from IPython.display import Image  
-wealth_reg = tree.export_graphviz(clf, out_file=None, 
-    wealth=x,
-    class_names=lr2.target_names,
-    filled=True, rounded=True,  
-    special_characters=True)  
-graph = pydotplus.graph_from_wealth_reg(wealth_reg)  
-Image(graph.create_png())
-
+# from IPython.display import Image  
+# dot_data = tree.export_graphviz(clf, out_file=None)
+#    feature_names=X.feature_names,
+#    class_names=y.target_names, 
+#    filled=True, rounded=True,
+#    special_characters=True)  
+# graph = pydotplus.graph_from_dot_data(dot_data)  
+# Image(graph.create_png()) 
 
 
 ###Comparison of Algorithms

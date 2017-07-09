@@ -16,15 +16,21 @@ from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics as mt
 from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
+from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import DecisionTreeRegressor
+from sklearn.kernel_ridge import KernelRidge
+from sklearn.linear_model import Lasso
+from sklearn.linear_model import Ridge
 from sklearn.svm import SVC
 from datetime import datetime
 import matplotlib.pyplot as plt
 from scipy import stats
+import graphviz
+import pydotplus
 
 
 def print_accuracy(title, results):
@@ -294,13 +300,6 @@ decision_tree_regressor_example()
 ####Visualization of the Decision Tree Classifier - Will this work for regression
 ####http://scikit-learn.org/stable/modules/tree.html
 
-#Code that is needed for windows to find the path of the Graphviz - may not be needed by all
-import os
-
-#Load packages for the decision tree visual
-from sklearn import tree
-import graphviz
-import pydotplus
 
 #Create the Tree
 clf = tree.DecisionTreeClassifier()
@@ -310,7 +309,6 @@ with open("wealth.dot", 'w') as f:
     f = tree.export_graphviz(clf, out_file=f)
 os.unlink('wealth.dot')
 
-import pydotplus 
 wealth_reg = tree.export_graphviz(clf, out_file=None) 
 graph = pydotplus.graph_from_wealth_reg(wealth_reg) 
 graph.write_pdf("wealth.pdf") 
@@ -345,48 +343,45 @@ showAlgorithmMetricPlots(x_results.map(np.mean) > .8)
 
 ####Kernel ridge regression - - Memory Issue - - I will look at more when i return
 ####http://scikit-learn.org/stable/modules/generated/sklearn.kernel_ridge.KernelRidge.html#sklearn.kernel_ridge.KernelRidge
-from sklearn.kernel_ridge import KernelRidge
-
 def kernel_ridge_reg():
     kr_reg = KernelRidge(alpha=.05)
     fit_and_test("Kernel Ridge Regressor", kr_reg, regression=True, scoring='r2')
     return
+   #kernel_ridge_reg()
+
+def compare_model_accuracy_using_statistics():
+   F, p = stats.f_oneway(_results[0], _results[1], _results[2], _results[3], _results[4], _results[5])
+   print ('F statistic %s and p-value %s for anova comparison of model accuracies' %(F, p))
    
-kernel_ridge_reg()
-
-F, p = stats.f_oneway(_results[0], _results[1], _results[2], _results[3], _results[4], _results[5])
-print ('F statistic %s and p-value %s for anova comparison of model accuracies' %(F, p))
-
-
-t, p = stats.ttest_ind(_results[4], _results[5])
-print ('t statistic %s and p-value %s for t-test comparing means of highest-accuracy Bayesian models' %(t, p))
+   t, p = stats.ttest_ind(_results[4], _results[5])
+   print ('t statistic %s and p-value %s for t-test comparing means of highest-accuracy Bayesian models' %(t, p))
+compare_model_accuracy_using_statistics()
 
 
-
-X, y = get_X_y()
-X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=.2)
-
-mb_clf = MultinomialNB(alpha=1)
-mb_clf.fit(X_train, y_train)
-
-y_hat = mb_clf.predict(X_test)
-
-acc = mt.accuracy_score(y_test, y_hat)
-print(mt.confusion_matrix(y_test, y_hat))
-mt.f1_score(y_test, y_hat)
-
-chosen_coeficients = pd.Series(mb_clf.coef_[0])
-chosen_coeficients.index = lr2.columns
-chosen_coeficients = chosen_coeficients.sort_values()
-
-# All coefficients seem to be negative, let's offset them to show some positive weights
-chosen_coeficients + 7
-
+def get_bayes_coefficients():
+   X, y = get_X_y()
+   X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=.2)
+   
+   mb_clf = MultinomialNB(alpha=1)
+   mb_clf.fit(X_train, y_train)
+   
+   y_hat = mb_clf.predict(X_test)
+   
+   acc = mt.accuracy_score(y_test, y_hat)
+   print(mt.confusion_matrix(y_test, y_hat))
+   mt.f1_score(y_test, y_hat)
+   
+   chosen_coeficients = pd.Series(mb_clf.coef_[0])
+   chosen_coeficients.index = lr2.columns
+   chosen_coeficients = chosen_coeficients.sort_values()
+   
+   # All coefficients seem to be negative, let's offset them to show some positive weights
+   chosen_coeficients + 7
+get_bayes_coefficients()
 
 ####Ridge Regression
 ####Uses L2 regularization (add a factor of sum of squares of coeffiecients)  The magnitude of alpha will decide the weights
 ####https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-ridge-lasso-regression-python/
-from sklearn.linear_model import Ridge
 
 def ridge_reg():
     ridge_reg = Ridge(alpha=.05, normalize=True)
@@ -398,7 +393,6 @@ ridge_reg()
 
 ####LASSO Regression:  Least Absolute Shrinkage and Selection Operator (absolute & selection)
 ####L1 regularization (add a factor of sum of absolute values of coefficients)
-from sklearn.linear_model import Lasso
 
 #With 
 def lasso_reg():

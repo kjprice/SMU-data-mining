@@ -329,14 +329,18 @@ Image(graph.create_png())
 
 
 ###Comparison of Algorithms
-def showAlgorithmMetricPlots():
-    fig = plt.figure()
+x_results = pd.Series(_results)
+x_names = pd.Series(names)
+def showAlgorithmMetricPlots(items_index):
+    fig = plt.figure(figsize=(16,10))
     fig.suptitle('Algorithm Comparison')
     ax = fig.add_subplot(111)
-    plt.boxplot(_results)
-    ax.set_xticklabels(names, rotation=90)
+    plt.boxplot(x_results[items_index])
+    ax.set_xticklabels(x_names[items_index], rotation=90, fontsize=16)
     plt.show()
-showAlgorithmMetricPlots()
+
+showAlgorithmMetricPlots(x_results.map(np.mean) > .8)
+
 
 
 ####Kernel ridge regression - - Memory Issue - - I will look at more when i return

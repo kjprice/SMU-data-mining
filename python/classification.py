@@ -382,3 +382,32 @@ chosen_coeficients = chosen_coeficients.sort_values()
 # All coefficients seem to be negative, let's offset them to show some positive weights
 chosen_coeficients + 7
 
+
+####Ridge Regression
+####Uses L2 regularization (add a factor of sum of squares of coeffiecients)  The magnitude of alpha will decide the weights
+####https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-ridge-lasso-regression-python/
+from sklearn.linear_model import Ridge
+
+def ridge_reg():
+    ridge_reg = Ridge(alpha=.05, normalize=True)
+    fit_and_test("Ridge Regressor", ridge_reg, regression=True, scoring='r2')
+    return
+   
+ridge_reg()
+
+
+####LASSO Regression:  Least Absolute Shrinkage and Selection Operator (absolute & selection)
+####L1 regularization (add a factor of sum of absolute values of coefficients)
+from sklearn.linear_model import Lasso
+
+#With 
+def lasso_reg():
+    lasso_reg = Lasso(alpha=.05, normalize=True, max_iter=1e5)
+    fit_and_test("Lasso Regressor", lasso_reg, regression=True, scoring='r2')
+    return
+   
+lasso_reg()
+
+
+
+

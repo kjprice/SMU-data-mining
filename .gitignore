@@ -3,4 +3,4 @@ data/*
 .Rhistory
 python_notebooks/map.ipynb
 python/os.py
-python_notebooks/my_model
+my_model

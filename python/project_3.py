@@ -8,7 +8,7 @@ import urllib
 if not os.path.isfile('data/song_data.csv'):
     print('Downloading Song Data..')
     %time urllib.urlretrieve('https://static.turi.com/datasets/millionsong/song_data.csv', 'data/song_data.csv')
-if not os.path.isfile('../data/10000.txt'):
+if not os.path.isfile('data/10000.txt'):
     print('Downloading 10000.txt...')
     %time urllib.urlretrieve('https://static.turi.com/datasets/millionsong/10000.txt', 'data/10000.txt')
 ##  Import data for the songs

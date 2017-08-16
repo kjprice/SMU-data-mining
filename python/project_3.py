@@ -2,7 +2,7 @@
 # kernel must be [conda env:gl-env]
 from matplotlib import pyplot as plt
 import graphlab as gl
-import graphlab.aggregate as ag
+import graphlab.aggregate as agg
 import os
 import urllib
 
@@ -42,7 +42,6 @@ print({
     'std': plays_info.std()
 })
 
-## Count number of songs played (overwhelmingly, a user only plays a song once)
 ## TODO: Perhaps use a violin plot / or apply log scale to "Count" attribute
 number_plays = usage_data.groupby('plays', [ag.COUNT()]).to_dataframe()
 number_plays.sort('plays').plot.bar()
@@ -85,6 +84,48 @@ rec_cv = gl.recommender.ranking_factorization_recommender.create(train,
                                                         item_id='song',
                                                         target='plays'
                                                         )
+
+
+results_from_rmse = rec_cv.evaluate(test)
+
+results_from_rmse['precision_recall_by_user'].groupby('cutoff',[agg.AVG('precision'),agg.STD('precision'),agg.AVG('recall'),agg.STD('recall')])
+
+
+
+## Let's find the best params
+params = {
+    'user_id': 'user',
+    'item_id': 'song',
+    'target': 'plays',
+    'num_factors': [8, 12, 16, 24, 32], 
+    'regularization':[0.001, .01],
+    'linear_regularization': [0.001, .01]
+}
+
+job = gl.model_parameter_search.create( (train,test),
+    gl.recommender.ranking_factorization_recommender.create,
+    params,
+    max_models=5,
+    environment=None
+)
+
+
+job.get_status()
+
+job_results = job.get_results()
+
+job_results.head()
+
+
+best_prms = job.get_best_params()
+best_prms
+
+models = job.get_models()
+models
+
+comparisonstruct = gl.compare(test,models)
+gl.show_comparison(comparisonstruct,models)
+
 
 
 

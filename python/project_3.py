@@ -8,19 +8,12 @@ import urllib
 
 plt.style.use('ggplot')
 
-## Download file if it does not exist
-if not os.path.isfile('data/song_data.csv'):
-    print('Downloading Song Data..')
-    urllib.urlretrieve('https://static.turi.com/datasets/millionsong/song_data.csv', 'data/song_data.csv')
-if not os.path.isfile('data/10000.txt'):
-    print('Downloading 10000.txt...')
-    urllib.urlretrieve('https://static.turi.com/datasets/millionsong/10000.txt', 'data/10000.txt')
 ##  Import data for the songs
 songs = gl.SFrame.read_csv("data/song_data.csv")
 
 
 # Import the data for the plays per user per song
-usage_data = gl.SFrame.read_csv("data/10000.txt",
+usage_data = gl.SFrame.read_csv("data/kaggle_visible_evaluation_triplets.txt",
   header=False,
   delimiter='\t',
   column_type_hints={'X3':int})

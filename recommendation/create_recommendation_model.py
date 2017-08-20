@@ -12,7 +12,7 @@ except Exception:
 
 
 # TODO: add song title to model
-usage_data = gl.SFrame.read_csv("../data/kaggle_visible_evaluation_triplets.txt",
+usage_data = gl.SFrame.read_csv("./data/kaggle_visible_evaluation_triplets.txt",
                                 header=False,
                                 delimiter='\t',
                                 column_type_hints={'X3':int})
@@ -20,7 +20,7 @@ usage_data = gl.SFrame.read_csv("../data/kaggle_visible_evaluation_triplets.txt"
 
 usage_data.rename({'X1':'user', 'X2': 'song_id', 'X3': 'plays'})
 
-songs = gl.SFrame.read_csv("../data/song_data.csv")
+songs = gl.SFrame.read_csv("./data/song_data.csv")
 
 ud_df = usage_data.to_dataframe()
 song_df = songs.to_dataframe()

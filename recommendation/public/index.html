@@ -4,11 +4,15 @@
     <title>Custom Recommendation</title>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      function HtmlEncode(s)
+      {
+        return s.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "\\'");        
+      }
       var socket = io();
 
       function showRecommendations(recommendations) {
         const output = recommendations.map(function (rec) {
-          return '<li><a href="javascript:void(0)" onclick="getRecommendations(\'' + rec.song_id + '\')">' + rec.song_id + '</a></li>';
+          return '<li><a href="javascript:void(0)" onclick="getRecommendations(\'' + HtmlEncode(rec.song_id) + '\')">' + rec.song_id + '</a></li>';
         });
         console.log(recommendations);
         document.getElementById('recommendations').innerHTML = output.join('');

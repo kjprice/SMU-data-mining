@@ -16,7 +16,7 @@ if (pythonFilePath.indexOf('gl-env') === -1) {
 // https://stackoverflow.com/questions/10775351/combining-node-js-and-python
 function initPython() {
   let recommendationsInitialized = false;
-// execSync('python create_recommendation_model.py', {encoding: 'utf8'})
+  execSync('python create_recommendation_model.py', {encoding: 'utf8'})
 
   recommendation = spawn('python', ['get_recommendation.py'], {encoding: 'utf8', stdio: 'pipe'});
 
@@ -25,7 +25,6 @@ function initPython() {
     if (data == 'started\n') {
       recommendationsInitialized = true;
     } else if (recommendationsInitialized) {
-      // Send to socket here
       sendRecommendations(data.toString())
     }
   });
@@ -71,7 +70,6 @@ function sendRecommendations(data) {
   const socketId = response[0];
   const recommendations = response[1];
 
-  io.sockets.connected[socketId].emit('chat message', 'hello');
   io.sockets.connected[socketId].emit('recommendation', JSON.parse(recommendations));
 }
 

@@ -20,9 +20,19 @@ usage_data = gl.SFrame.read_csv("../data/kaggle_visible_evaluation_triplets.txt"
 
 usage_data.rename({'X1':'user', 'X2': 'song_id', 'X3': 'plays'})
 
+songs = gl.SFrame.read_csv("../data/song_data.csv")
+
+ud_df = usage_data.to_dataframe()
+song_df = songs.to_dataframe()
+
+new_df = ud_df.merge(song_df, how='left', left_on='song_id', right_on='song_id')
+
+combo_songs = gl.SFrame(new_df)
+combo_songs['song_id'] = combo_songs['title'] + ' (' + combo_songs['artist_name'] + ')'
+
 # TODO: Update with new params
 # TODO: Display song title to user
-item_item_model = gl.recommender.item_similarity_recommender.create(usage_data,
+item_item_model = gl.recommender.item_similarity_recommender.create(combo_songs,
                                   user_id='user',
                                   item_id='song_id',
                                   target='plays')

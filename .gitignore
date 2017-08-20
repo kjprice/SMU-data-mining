@@ -4,3 +4,6 @@ data/*
 python_notebooks/map.ipynb
 python/os.py
 my_model
+node_modules
+recommendation/model
+graph-lab.conf
